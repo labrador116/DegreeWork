@@ -1,0 +1,13 @@
+C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\bin\Release\DegreeWork.exe.config
+C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\bin\Release\DegreeWork.exe
+C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\bin\Release\DegreeWork.pdb
+C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Release\MainWindow.g.cs
+C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Release\App.g.cs
+C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Release\DegreeWork_MarkupCompile.cache
+C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Release\DegreeWork_MarkupCompile.lref
+C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Release\MainWindow.baml
+C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Release\DegreeWork.g.resources
+C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Release\DegreeWork.Properties.Resources.resources
+C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Release\DegreeWork.csproj.GenerateResource.Cache
+C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Release\DegreeWork.exe
+C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Release\DegreeWork.pdb
