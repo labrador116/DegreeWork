@@ -11,3 +11,4 @@ C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\D
 C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\DegreeWork.csproj.GenerateResource.Cache
 C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\DegreeWork.exe
 C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\DegreeWork.pdb
+C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\DegreeWork.csprojResolveAssemblyReference.cache

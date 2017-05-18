@@ -54,6 +54,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Instances\RectangleRoom.cs" />
+    <Compile Include="Service\ExecuteService.cs" />
+    <Compile Include="SpaceParam\SingleSpaceParams.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -62,6 +65,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Instances\Gene.cs" />
+    <Compile Include="Instances\Chromosome.cs" />
+    <Compile Include="Instances\Population.cs" />
+    <Compile Include="Container\ResultModel.cs" />
+    <Compile Include="Container\Сoordinate.cs" />
+    <Compile Include="GeneticAlgorithm\GA.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

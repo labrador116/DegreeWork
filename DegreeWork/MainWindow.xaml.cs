@@ -1,4 +1,6 @@
-﻿using System;
+﻿using DegreeWork.Instances;
+using DegreeWork.SpaceParam;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -21,11 +23,8 @@ namespace DegreeWork
     /// </summary>
     public partial class MainWindow : Window
     {
-        public MainWindow()
-        {
-            InitializeComponent();
-           // SetBoundary();
-        }
+        private const int SIZE = 1;
+        private const int SHIFT = SIZE / 2;
 
         private Point prev;
         private SolidColorBrush color = new SolidColorBrush(Colors.Black);
@@ -35,22 +34,21 @@ namespace DegreeWork
         private Line line3;
         private Line line4;
 
-
-        private const int SIZE = 4;
-        private const int SHIFT = SIZE / 2;
+        public MainWindow()
+        {
+            InitializeComponent();
+        }
     
         private void MyIP_MouseMove(object sender, MouseEventArgs e)
         {
             if (!isPaint) return;
-            if (line != null && line2 != null && line3 != null && line4 != null)
+           if (line != null && line2 != null && line3 != null && line4 != null)
             {
-                CanvasAreaForSchemeOfRoom.Children.Remove(line);
-                CanvasAreaForSchemeOfRoom.Children.Remove(line2);
-                CanvasAreaForSchemeOfRoom.Children.Remove(line3);
-                CanvasAreaForSchemeOfRoom.Children.Remove(line4);
+               CanvasAreaForSchemeOfRoom.Children.Remove(line);
+               CanvasAreaForSchemeOfRoom.Children.Remove(line2);
+               CanvasAreaForSchemeOfRoom.Children.Remove(line3);
+               CanvasAreaForSchemeOfRoom.Children.Remove(line4);
             }
-
-
 
             var point = Mouse.GetPosition(CanvasAreaForSchemeOfRoom);
             line = new Line
@@ -101,17 +99,12 @@ namespace DegreeWork
                 StrokeEndLineCap = PenLineCap.Round
             };
 
-            //prev = point;
-
-            
             CanvasAreaForSchemeOfRoom.Children.Add(line);
             CanvasAreaForSchemeOfRoom.Children.Add(line2);
             CanvasAreaForSchemeOfRoom.Children.Add(line3);
             CanvasAreaForSchemeOfRoom.Children.Add(line4);
-            
-           
         }
-     
+    
         private void MyIP_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
             if (isPaint) return;
@@ -125,6 +118,22 @@ namespace DegreeWork
     
         private void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
+            RectangleRoom room = new RectangleRoom
+            {
+                X1 = Convert.ToInt32(line.X1),
+                Y1 = Convert.ToInt32(line.Y1),
+
+                X2 = Convert.ToInt32(line.X2),
+                Y2 = Convert.ToInt32(line.Y2),
+
+                X3 = Convert.ToInt32(line2.X2),
+                Y3 = Convert.ToInt32(line2.Y2),
+
+                X4 = Convert.ToInt32(line4.X2),
+                Y4 = Convert.ToInt32(line4.Y2)
+            };
+            SingleSpaceParams.getInstance().Rooms.Add(room); 
+
             line = null;
             line2 = null;
             line3 = null;
