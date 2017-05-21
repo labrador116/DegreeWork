@@ -54,9 +54,9 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Instances\RectangleRoom.cs" />
-    <Compile Include="Service\ExecuteService.cs" />
-    <Compile Include="SpaceParam\SingleSpaceParams.cs" />
+    <Compile Include="Model\Instances\RectangleRoom.cs" />
+    <Compile Include="Model\Service\ExecuteService.cs" />
+    <Compile Include="Model\SpaceParam\SingleSpaceParams.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -65,12 +65,12 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="Instances\Gene.cs" />
-    <Compile Include="Instances\Chromosome.cs" />
-    <Compile Include="Instances\Population.cs" />
-    <Compile Include="Container\ResultModel.cs" />
-    <Compile Include="Container\Сoordinate.cs" />
-    <Compile Include="GeneticAlgorithm\GA.cs" />
+    <Compile Include="Model\Instances\Gene.cs" />
+    <Compile Include="Model\Instances\Chromosome.cs" />
+    <Compile Include="Model\Instances\Population.cs" />
+    <Compile Include="Model\Container\ResultModel.cs" />
+    <Compile Include="Model\Container\Сoordinate.cs" />
+    <Compile Include="Model\GeneticAlgorithm\GA.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -101,6 +101,15 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Model\DB\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\DataBaseStruct\DataBaseStruct.csproj">
+      <Project>{0223ff4c-2ecb-4ed3-a500-58f46cbea0e2}</Project>
+      <Name>DataBaseStruct</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
