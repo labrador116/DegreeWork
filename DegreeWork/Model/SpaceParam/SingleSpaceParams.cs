@@ -1,5 +1,5 @@
 ﻿using DegreeWork.Instances;
-using GeneticAlgorithmCourseWork.Container;
+using DegreeWork.Container;
 using System;
 using System.Collections.Generic;
 using System.Linq;

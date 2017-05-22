@@ -1,6 +1,6 @@
-﻿using GeneticAlgorithmCourseWork.ChromosomeModel;
-using GeneticAlgorithmCourseWork.Container;
-using GeneticAlgorithmCourseWork.SpaceParam;
+﻿using DegreeWork.ChromosomeModel;
+using DegreeWork.Container;
+using DegreeWork.SpaceParam;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace GeneticAlgorithmCourseWork.Service
+namespace DegreeWork.Service
 {
     public class ExecuteService
     {

@@ -4,10 +4,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using GeneticAlgorithmCourseWork.ChromosomeModel;
-using GeneticAlgorithmCourseWork.SpaceParam;
+using DegreeWork.ChromosomeModel;
+using DegreeWork.SpaceParam;
 
-namespace GeneticAlgorithmCourseWork.Container
+namespace DegreeWork.Container
 {
   public  class Chromosome
     {

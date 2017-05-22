@@ -1,7 +1,7 @@
-﻿using GeneticAlgorithmCourseWork.ChromosomeModel;
-using GeneticAlgorithmCourseWork.Container;
-using GeneticAlgorithmCourseWork.Service;
-using GeneticAlgorithmCourseWork.SpaceParam;
+﻿using DegreeWork.ChromosomeModel;
+using DegreeWork.Container;
+using DegreeWork.Service;
+using DegreeWork.SpaceParam;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +9,7 @@ using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace GeneticAlgorithmCourseWork.GeneticAlgorithm
+namespace DegreeWork.GeneticAlgorithm
 {
    public class GA
     {

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DegreeWork"
         xmlns:System="clr-namespace:System;assembly=mscorlib" x:Class="DegreeWork.MainWindow"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="850" Background="WhiteSmoke" MaxWidth="850" MouseLeftButtonUp="Window_MouseLeftButtonUp">
+        Title="MainWindow" Height="600" Width="850" Background="WhiteSmoke" MaxWidth="850" >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>

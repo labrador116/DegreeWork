@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace GeneticAlgorithmCourseWork.Container
+namespace DegreeWork.Container
 {
    public class Coordinate
     {

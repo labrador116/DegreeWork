@@ -15,8 +15,20 @@ namespace DataBaseStruct
 
         }
 
+        public DB_ConnectionContext(string dbConnection) : base(dbConnection)
+        {
+
+        }
+
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<SchemeOfBuilding>()
+                .HasRequired(p => p.ProjectNumber)
+                .WithOptional(c => c.Scheme);
+
+            modelBuilder.Entity<PlacmentOfModules>()
+                .HasRequired(p => p.Position)
+                .WithOptional(c => c.Placment);
 
         }
 
