@@ -1,0 +1,25 @@
+﻿<Page x:Class="DegreeWork.CreateProjectPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:DegreeWork"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="700"
+      Title="CreateProjectPage" Background="WhiteSmoke">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="ContentStringToDBTextBox" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" MinWidth="300" MaxWidth="800" MinHeight="5" Tag="" ToolTip="Строка подключения к базе данных" Padding="9,0,0,0" Text="Строка подключения к базе данных" Margin="30,30,30,3" />
+        <Button x:Name="ConnectToDBButton" Grid.Column="1" MinWidth="60" MinHeight="12" MaxHeight="27" MaxWidth="196" Content="Подключиться" Padding="3" Background="#FFDAEEF1" MouseRightButtonDown="ConnectToDBButton_MouseRightButtonDown" Margin="0,20,0,0" />
+        <Label x:Name="ResultConnectToDBLabel" Grid.Row="1" Content="Подклюение к БД" Margin="30,0,0,0" HorizontalContentAlignment="Center" />
+    </Grid>
+</Page>

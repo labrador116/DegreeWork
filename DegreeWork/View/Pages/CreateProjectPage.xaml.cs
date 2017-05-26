@@ -1,4 +1,5 @@
-﻿using System;
+﻿using DataBaseStruct;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +24,11 @@ namespace DegreeWork
         public CreateProjectPage()
         {
             InitializeComponent();
+        }
+
+        private void ConnectToDBButton_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            DB_ConnectionContext DB_context = new DB_ConnectionContext(ContentStringToDBTextBox.Text);
         }
     }
 }

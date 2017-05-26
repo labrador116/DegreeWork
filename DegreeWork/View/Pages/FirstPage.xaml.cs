@@ -32,7 +32,13 @@ namespace DegreeWork
             nav = NavigationService.GetNavigationService(this);
             CreateProjectPage page = new CreateProjectPage();
             nav.Navigate(page);
-           // nav.Navigate(new System.Uri("CreateProjectPage.xaml", UriKind.RelativeOrAbsolute));
+            
+        }
+
+        private void createDataBase_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        {
+            nav = NavigationService.GetNavigationService(this);
+            nav.Navigate(new System.Uri("View/Pages/CreateDataBasePage.xaml", UriKind.RelativeOrAbsolute));
         }
     }
 }

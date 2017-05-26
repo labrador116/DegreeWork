@@ -16,6 +16,6 @@
         </Grid.RowDefinitions>
         <TextBlock Grid.Row="0" x:Name="createProject" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Создать проект" VerticalAlignment="Stretch" FontSize="24" Foreground="#FF3567BF" MouseLeftButtonUp="createProject_MouseLeftButtonUp"/>
         <TextBlock Grid.Row="1" x:Name="openProject" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Открыть проект" VerticalAlignment="Stretch" FontSize="24" Foreground="#FF3567BF" Margin="0,15,0,0"/>
-        <TextBlock Grid.Row="2" x:Name="createDataBase" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Создать базу данных" VerticalAlignment="Stretch" FontSize="24" Foreground="#FF3567BF" Margin="0,15,0,0"/>
+        <TextBlock Grid.Row="2" x:Name="createDataBase" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Создать базу данных" VerticalAlignment="Stretch" FontSize="24" Foreground="#FF3567BF" Margin="0,15,0,0" MouseLeftButtonDown="createDataBase_MouseLeftButtonDown"/>
     </Grid>
 </Page>
