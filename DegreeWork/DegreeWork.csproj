@@ -73,6 +73,9 @@
     <Compile Include="View\Pages\CreateProjectPage.xaml.cs">
       <DependentUpon>CreateProjectPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\ConnectToDBWindows.xaml.cs">
+      <DependentUpon>ConnectToDBWindows.xaml</DependentUpon>
+    </Compile>
     <Page Include="View\Pages\CreateDataBasePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -100,6 +103,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\Pages\CreateProjectPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\ConnectToDBWindows.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

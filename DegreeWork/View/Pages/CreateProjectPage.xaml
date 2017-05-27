@@ -5,11 +5,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:DegreeWork"
       mc:Ignorable="d" 
-      d:DesignHeight="300" d:DesignWidth="700"
-      Title="CreateProjectPage" Background="WhiteSmoke">
+      d:DesignHeight="300" d:DesignWidth="900" Title="CreateProjectPage" Background="WhiteSmoke">
 
-    <Grid>
+    <Grid HorizontalAlignment="Center">
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -17,9 +17,16 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
+            <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
-        <TextBox x:Name="ContentStringToDBTextBox" Grid.Column="0" Grid.Row="0" VerticalAlignment="Center" MinWidth="300" MaxWidth="800" MinHeight="5" Tag="" ToolTip="Строка подключения к базе данных" Padding="9,0,0,0" Text="Строка подключения к базе данных" Margin="30,30,30,3" />
-        <Button x:Name="ConnectToDBButton" Grid.Column="1" MinWidth="60" MinHeight="12" MaxHeight="27" MaxWidth="196" Content="Подключиться" Padding="3" Background="#FFDAEEF1" MouseRightButtonDown="ConnectToDBButton_MouseRightButtonDown" Margin="0,20,0,0" />
-        <Label x:Name="ResultConnectToDBLabel" Grid.Row="1" Content="Подклюение к БД" Margin="30,0,0,0" HorizontalContentAlignment="Center" />
+
+        <TextBlock Grid.Row="0" Grid.Column="0" x:Name="ConnectToBdTextBlock" HorizontalAlignment="Left" TextWrapping="Wrap" Text="Подключиться к базе данных" VerticalAlignment="Stretch" FontSize="16" Foreground="#FF3567BF" Margin="0,5,100,0" TextDecorations="Underline" PreviewMouseLeftButtonDown="ConnectToBdTextBlock_PreviewMouseLeftButtonDown" />
+        <Label x:Name="ConnectedToDbLabel" Grid.Row="1" Grid.Column="0" Content="База данных подключена!" Padding="5,0,5,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="#FF53B60E" Visibility="Hidden"  />
+        <TextBlock Grid.Row="2" x:Name="createCustomerTextBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Создать заказчика" VerticalAlignment="Stretch" FontSize="24" Grid.Column="1" IsEnabled="False">
+            <TextBlock.Foreground>
+                <SolidColorBrush Color="{StaticResource Color1}"/>
+            </TextBlock.Foreground>
+        </TextBlock>
+        <ComboBox x:Name="chooseCustomerComboBox" Grid.Row="3" Grid.Column="2" MinWidth="200" MinHeight="20" MaxWidth="250" MaxHeight="25" HorizontalAlignment="Right" Margin="100,0,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="6,3,3,3" />
     </Grid>
 </Page>

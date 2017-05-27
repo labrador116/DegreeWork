@@ -21,14 +21,35 @@ namespace DegreeWork
     /// </summary>
     public partial class CreateProjectPage : Page
     {
+        DB_ConnectionContext _Context;
         public CreateProjectPage()
         {
             InitializeComponent();
+           
+            if (createCustomerTextBlock.IsEnabled == false)
+            {
+                createCustomerTextBlock.Opacity=0.1;
+            }
         }
 
-        private void ConnectToDBButton_MouseRightButtonDown(object sender, MouseButtonEventArgs e)
+        private void ConnectToBdTextBlock_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            DB_ConnectionContext DB_context = new DB_ConnectionContext(ContentStringToDBTextBox.Text);
+            ConnectToDBWindows dialogConnect = new ConnectToDBWindows();
+            dialogConnect.GettingContext += DialogConnect_GettingContext;
+            dialogConnect.ShowDialog();
+        }
+
+        private void DialogConnect_GettingContext(DB_ConnectionContext context)
+        {
+            _Context = context;
+
+            if (_Context != null)
+            {
+                ConnectedToDbLabel.Content += "\n DataBase name: " + _Context.Database.Connection.Database;
+                ConnectedToDbLabel.Visibility = Visibility.Visible;
+                createCustomerTextBlock.IsEnabled = true;
+                createCustomerTextBlock.Opacity = 1;
+            }
         }
     }
 }

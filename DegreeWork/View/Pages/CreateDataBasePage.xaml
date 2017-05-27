@@ -20,6 +20,6 @@
         <TextBox x:Name="DataBaseNameTextBox" ToolTip="Название базы данных" MinWidth="100" MinHeight="15" MaxWidth="300" Margin="30,3,30,30" Grid.Row="1" />
         <Button x:Name="CreateDataBaseButton" Background="#FFDAEEF1" Grid.Row="2" HorizontalContentAlignment="Center" MinWidth="150" MinHeight="32" MaxWidth="300" MaxHeight="60" Content="Создать базу данных" VerticalAlignment="Center" FontSize="18" ClickMode="Press" PreviewMouseLeftButtonDown="CreateDataBaseButton_PreviewMouseLeftButtonDown" />
         <Label x:Name="ResultOfCreationDataBaseLabel" Grid.Row="3" HorizontalContentAlignment="Center" Content="Результат" FontSize="16" Visibility="Hidden" />
-        <TextBox x:Name="connectionStringTextBox" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0" Text="Строка подключения" FontSize="14" FontWeight="SemiBold" Foreground="#FF5EAC5E" Background="#FFEBF1F9"/>
+        <TextBox x:Name="connectionStringTextBox" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0,5,0,0" Text="Строка подключения" FontSize="14" FontWeight="SemiBold" Foreground="#FF5EAC5E" Background="#FFEBF1F9" Visibility="Hidden"/>
     </Grid>
 </Page>

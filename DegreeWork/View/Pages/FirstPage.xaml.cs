@@ -24,15 +24,12 @@ namespace DegreeWork
         public FirstPage()
         {
             InitializeComponent();
-            
         }
 
         private void createProject_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
             nav = NavigationService.GetNavigationService(this);
-            CreateProjectPage page = new CreateProjectPage();
-            nav.Navigate(page);
-            
+            nav.Navigate(new System.Uri("View/Pages/CreateProjectPage.xaml", UriKind.RelativeOrAbsolute));
         }
 
         private void createDataBase_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)

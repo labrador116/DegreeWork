@@ -4,6 +4,8 @@
              xmlns:local="clr-namespace:DegreeWork"
              StartupUri="View/Pages/FirstPage.xaml">
     <Application.Resources>
-         
+
+        <Color x:Key="Color1">#FF3567BF</Color>
+
     </Application.Resources>
 </Application>

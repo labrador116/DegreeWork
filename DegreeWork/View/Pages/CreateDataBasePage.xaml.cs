@@ -38,7 +38,7 @@ namespace DegreeWork
                     DB_context.Database.CreateIfNotExists();
                     connectionString = DB_context.Database.Connection.ConnectionString;
                 }
-                catch (Exception ex)
+                catch 
                 {
                     ResultOfCreationDataBaseLabel.Content = "Ошибка! База данных не создана.";
                     ResultOfCreationDataBaseLabel.Visibility = Visibility.Visible;
