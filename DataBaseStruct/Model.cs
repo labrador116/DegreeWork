@@ -26,9 +26,9 @@ namespace DataBaseStruct
             [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             public int ProjectId { get; set; }
             public int ProjectNumber { get; set; }
-            public int ProgectName { get; set; }
+            public string ProgectName { get; set; }
             public virtual Customer Customer { get; set; }
-            public virtual SchemeOfBuilding Scheme { get; set; }
+            public virtual List<SchemeOfBuilding> Scheme { get; set; }
         }
 
         public class SchemeOfBuilding
@@ -36,7 +36,7 @@ namespace DataBaseStruct
             [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             public int SchemeId { get; set; }
             public double Width { get; set; }
-            public double Lenght { get; set; }
+            public double Height { get; set; }
             public virtual Project ProjectNumber { get; set; }
             public virtual List<InstallationPosition> Positions { get; set; }
         }

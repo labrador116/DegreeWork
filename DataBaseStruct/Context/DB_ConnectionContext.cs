@@ -22,13 +22,22 @@ namespace DataBaseStruct
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<SchemeOfBuilding>()
-                .HasRequired(p => p.ProjectNumber)
-                .WithOptional(c => c.Scheme);
+           // modelBuilder.Entity<SchemeOfBuilding>()
+             //   .HasRequired(p => p.ProjectNumber)
+               // .WithRequiredDependent(c => c.Scheme);
+            /*modelBuilder.Entity<SchemeOfBuilding>()
+                .HasOptional(p => p.ProjectNumber)
+                .WithOptionalDependent()
+                .Map(p=>p.MapKey("SchemeKey"));
 
-            modelBuilder.Entity<PlacmentOfModules>()
-                .HasRequired(p => p.Position)
-                .WithOptional(c => c.Placment);
+            modelBuilder.Entity<Project>()
+                .HasOptional(c => c.Scheme)
+                .WithOptionalPrincipal()
+                .Map(c => c.MapKey("ProjectKey"));*/
+
+           modelBuilder.Entity<PlacmentOfModules>()
+                .HasRequired(pv => pv.Position)
+                .WithOptional(cv => cv.Placment);
 
         }
 
