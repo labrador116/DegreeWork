@@ -21,7 +21,7 @@ namespace DegreeWork
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class MainWindowPage : Page
     {
         private const int SIZE = 1;
         private const int SHIFT = SIZE / 2;
@@ -34,7 +34,7 @@ namespace DegreeWork
         private Line line3;
         private Line line4;
 
-        public MainWindow()
+        public MainWindowPage()
         {
             InitializeComponent();
         }

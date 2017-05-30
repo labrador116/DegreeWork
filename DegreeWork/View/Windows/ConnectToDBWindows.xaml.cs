@@ -48,11 +48,9 @@ namespace DegreeWork
                     {
                         throw new Exception();
                     }
-                    
                 }
                 GettingContext(_Context);
                 this.Close();
-
             }
             catch
             {

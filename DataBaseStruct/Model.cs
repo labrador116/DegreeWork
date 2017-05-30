@@ -48,7 +48,7 @@ namespace DataBaseStruct
             public int Coord_X { get; set; }
             public int Coord_Y { get; set; }
             public virtual SchemeOfBuilding Scheme { get; set; }
-            public virtual PlacmentOfModules Placment { get; set; }
+            public virtual List<PlacmentOfModules> Placment { get; set; }
         }
 
         public class PlacmentOfModules
@@ -56,7 +56,7 @@ namespace DataBaseStruct
             [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             public int PlacementId { get; set; }
             public virtual InstallationPosition Position { get; set; }
-            public virtual ModelsOfModules Model { get; set; }
+            public virtual List<ModelsOfModules> Model { get; set; }
         }
 
         public class ModelsOfModules

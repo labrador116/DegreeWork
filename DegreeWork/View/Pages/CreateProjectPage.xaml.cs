@@ -1,4 +1,5 @@
 ﻿using DataBaseStruct;
+using DegreeWork.SpaceParam;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -30,6 +31,7 @@ namespace DegreeWork
         int _ProjectNumber;
         int _WidthOfArea;
         int _HeightOfArea;
+        NavigationService nav;
         public CreateProjectPage()
         {
             InitializeComponent();
@@ -83,7 +85,10 @@ namespace DegreeWork
         private void chooseCustomerComboBox_DropDownOpened(object sender, EventArgs e)
         {
             chooseCustomerComboBox.Items.Clear();
-            _СustomersFromDB = _Context.Customers.ToList();
+            if (_Context.Customers.ToList() != null)
+            {
+                _СustomersFromDB = _Context.Customers.ToList();
+            }
 
             foreach (Customer customer in _СustomersFromDB)
             {
@@ -163,6 +168,10 @@ namespace DegreeWork
                 {
                     _Context.Schemes.Add(scheme);
                     _Context.SaveChanges();
+
+                    SingleSpaceParams.getInstance(_WidthOfArea, _HeightOfArea);
+                    nav = NavigationService.GetNavigationService(this);
+                    nav.Navigate(new System.Uri("View/Pages/MainWindowPage.xaml", UriKind.RelativeOrAbsolute));
                 }
                 catch
                 {
