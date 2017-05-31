@@ -35,6 +35,8 @@ namespace DegreeWork
         private Line line2;
         private Line line3;
         private Line line4;
+        bool _IsRoom = true;
+        bool _IsPoint = false;
 
         public MainWindowPage(DB_ConnectionContext context)
         {
@@ -44,107 +46,118 @@ namespace DegreeWork
         
         private void MyIP_MouseMove(object sender, MouseEventArgs e)
         {
-            if (!isPaint) return;
-           if (line != null && line2 != null && line3 != null && line4 != null)
+            if (_IsRoom)
             {
-               CanvasAreaForSchemeOfRoom.Children.Remove(line);
-               CanvasAreaForSchemeOfRoom.Children.Remove(line2);
-               CanvasAreaForSchemeOfRoom.Children.Remove(line3);
-               CanvasAreaForSchemeOfRoom.Children.Remove(line4);
+                if (!isPaint) { return; }
+
+                if (line != null && line2 != null && line3 != null && line4 != null)
+                {
+                    CanvasAreaForSchemeOfRoom.Children.Remove(line);
+                    CanvasAreaForSchemeOfRoom.Children.Remove(line2);
+                    CanvasAreaForSchemeOfRoom.Children.Remove(line3);
+                    CanvasAreaForSchemeOfRoom.Children.Remove(line4);
+                }
+
+                var point = Mouse.GetPosition(CanvasAreaForSchemeOfRoom);
+                line = new Line
+                {
+                    Stroke = color,
+                    StrokeThickness = SIZE,
+                    X1 = prev.X,
+                    Y1 = prev.Y,
+                    X2 = point.X,
+                    Y2 = prev.Y,
+                    StrokeStartLineCap = PenLineCap.Round,
+                    StrokeEndLineCap = PenLineCap.Round
+                };
+
+                line2 = new Line
+                {
+                    Stroke = color,
+                    StrokeThickness = SIZE,
+                    X1 = prev.X,
+                    Y1 = prev.Y,
+                    X2 = prev.X,
+                    Y2 = point.Y,
+                    StrokeStartLineCap = PenLineCap.Round,
+                    StrokeEndLineCap = PenLineCap.Round
+                };
+
+                line3 = new Line
+                {
+                    Stroke = color,
+                    StrokeThickness = SIZE,
+                    X1 = prev.X,
+                    Y1 = point.Y,
+                    X2 = point.X,
+                    Y2 = point.Y,
+                    StrokeStartLineCap = PenLineCap.Round,
+                    StrokeEndLineCap = PenLineCap.Round
+                };
+
+                line4 = new Line
+                {
+                    Stroke = color,
+                    StrokeThickness = SIZE,
+                    X1 = point.X,
+                    Y1 = prev.Y,
+                    X2 = point.X,
+                    Y2 = point.Y,
+                    StrokeStartLineCap = PenLineCap.Round,
+                    StrokeEndLineCap = PenLineCap.Round
+                };
+
+                CanvasAreaForSchemeOfRoom.Children.Add(line);
+                CanvasAreaForSchemeOfRoom.Children.Add(line2);
+                CanvasAreaForSchemeOfRoom.Children.Add(line3);
+                CanvasAreaForSchemeOfRoom.Children.Add(line4);
             }
-
-            var point = Mouse.GetPosition(CanvasAreaForSchemeOfRoom);
-            line = new Line
-            {
-                Stroke = color,
-                StrokeThickness = SIZE,
-                X1 = prev.X,
-                Y1 = prev.Y,
-                X2 = point.X,
-                Y2 = prev.Y,
-                StrokeStartLineCap = PenLineCap.Round,
-                StrokeEndLineCap = PenLineCap.Round
-            };
-
-            line2 = new Line
-            {
-                Stroke = color,
-                StrokeThickness = SIZE,
-                X1 = prev.X,
-                Y1 = prev.Y,
-                X2 = prev.X,
-                Y2 = point.Y,
-                StrokeStartLineCap = PenLineCap.Round,
-                StrokeEndLineCap = PenLineCap.Round
-            };
-
-            line3 = new Line
-            {
-                Stroke = color,
-                StrokeThickness = SIZE,
-                X1 = prev.X,
-                Y1 = point.Y,
-                X2 = point.X,
-                Y2 = point.Y,
-                StrokeStartLineCap = PenLineCap.Round,
-                StrokeEndLineCap = PenLineCap.Round
-            };
-
-            line4 = new Line
-            {
-                Stroke = color,
-                StrokeThickness = SIZE,
-                X1 = point.X,
-                Y1 = prev.Y,
-                X2 = point.X,
-                Y2 = point.Y,
-                StrokeStartLineCap = PenLineCap.Round,
-                StrokeEndLineCap = PenLineCap.Round
-            };
-
-            CanvasAreaForSchemeOfRoom.Children.Add(line);
-            CanvasAreaForSchemeOfRoom.Children.Add(line2);
-            CanvasAreaForSchemeOfRoom.Children.Add(line3);
-            CanvasAreaForSchemeOfRoom.Children.Add(line4);
         }
     
         private void MyIP_MouseLeftButtonDown(object sender, MouseButtonEventArgs e)
         {
-            if (isPaint) return;
-            isPaint = true;
-            prev = Mouse.GetPosition(CanvasAreaForSchemeOfRoom);
-            var dot = new Ellipse { Width = SIZE, Height = SIZE, Fill = color };
-            dot.SetValue(Canvas.LeftProperty, prev.X - SHIFT);
-            dot.SetValue(Canvas.TopProperty, prev.Y - SHIFT);
-            CanvasAreaForSchemeOfRoom.Children.Add(dot);
+            if (_IsRoom)
+            {
+                if (isPaint) { return; }
+
+                isPaint = true;
+                prev = Mouse.GetPosition(CanvasAreaForSchemeOfRoom);
+                var dot = new Ellipse { Width = SIZE, Height = SIZE, Fill = color };
+                dot.SetValue(Canvas.LeftProperty, prev.X - SHIFT);
+                dot.SetValue(Canvas.TopProperty, prev.Y - SHIFT);
+                CanvasAreaForSchemeOfRoom.Children.Add(dot);
+            }
         }
     
         private void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            if (line != null && line2 != null)
+            if (_IsRoom)
             {
-                RectangleRoom room = new RectangleRoom
+                if (line != null && line2 != null)
                 {
-                    X1 = Convert.ToInt32(line.X1),
-                    Y1 = Convert.ToInt32(line.Y1),
+                    RectangleRoom room = new RectangleRoom
+                    {
+                        X1 = Convert.ToInt32(line.X1),
+                        Y1 = Convert.ToInt32(line.Y1),
 
-                    X2 = Convert.ToInt32(line.X2),
-                    Y2 = Convert.ToInt32(line.Y2),
+                        X2 = Convert.ToInt32(line.X2),
+                        Y2 = Convert.ToInt32(line.Y2),
 
-                    X3 = Convert.ToInt32(line2.X2),
-                    Y3 = Convert.ToInt32(line2.Y2),
+                        X3 = Convert.ToInt32(line2.X2),
+                        Y3 = Convert.ToInt32(line2.Y2),
 
-                    X4 = Convert.ToInt32(line4.X2),
-                    Y4 = Convert.ToInt32(line4.Y2)
-                };
-                SingleSpaceParams.getInstance().Rooms.Add(room);
+                        X4 = Convert.ToInt32(line4.X2),
+                        Y4 = Convert.ToInt32(line4.Y2)
+                    };
+                    SingleSpaceParams.getInstance().Rooms.Add(room);
+                }
+
+                line = null;
+                line2 = null;
+                line3 = null;
+                line4 = null;
+                isPaint = false;
             }
-
-            line = null;
-            line2 = null;
-            line3 = null;
-            line4 = null;
-            isPaint = false;
         }
 
         private void CanvasAreaForSchemeOfRoom_Initialized(object sender, EventArgs e)
@@ -152,6 +165,44 @@ namespace DegreeWork
             Canvas canvas = (Canvas)sender;
             canvas.Width = SingleSpaceParams.getInstance().Width;
             canvas.Height = SingleSpaceParams.getInstance().Height;
+        }
+
+        private void RoomEnableButton_Click(object sender, RoutedEventArgs e)
+        {
+            SolidColorBrush pointEbableBrush = new SolidColorBrush
+            {
+                Color = Colors.White
+            };
+            PointEnableButton.Background = pointEbableBrush;
+
+            SolidColorBrush roomEnabledBrush = new SolidColorBrush
+            {
+                Color = Colors.LightBlue
+            };
+            RoomEnableButton.Background = roomEnabledBrush;
+
+            _IsRoom = true;
+            _IsPoint = false;
+        }
+
+        private void PointEnableButton_Click(object sender, RoutedEventArgs e)
+        {
+            SolidColorBrush pointEbableBrush = new SolidColorBrush
+            {
+                Color = Colors.LightBlue
+            };
+            PointEnableButton.Background = pointEbableBrush;
+
+            SolidColorBrush roomEnabledBrush = new SolidColorBrush
+            {
+                Color = Colors.White
+            };
+            RoomEnableButton.Background = roomEnabledBrush;
+
+            _IsRoom = false;
+            _IsPoint = true;
+
+            //ToDo Point need to add in the structure of data base and Collection of control points need to add in the SingleSpaceParam
         }
     }
 }

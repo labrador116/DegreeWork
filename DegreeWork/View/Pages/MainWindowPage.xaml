@@ -6,9 +6,10 @@
         xmlns:local="clr-namespace:DegreeWork"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="850" Background="WhiteSmoke" MaxWidth="850" >
-    <Grid>
+        Title="MainWindow" Height="600" Width="850" Background="WhiteSmoke" >
+    <Grid HorizontalAlignment="Center">
         <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
@@ -17,7 +18,17 @@
                     MouseLeftButtonDown="MyIP_MouseLeftButtonDown" 
                     MouseMove="MyIP_MouseMove" MouseLeftButtonUp="Window_MouseLeftButtonUp" Initialized="CanvasAreaForSchemeOfRoom_Initialized"/>
         </Border>
-        <Grid Grid.Column="1" HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Top" MinWidth="100" MaxWidth="1000" Margin="0,15,0,0" Background="CadetBlue">
+
+        <Grid Grid.Column="1" >
+            <Grid.RowDefinitions>
+                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/>
+            </Grid.RowDefinitions>
+            <Button x:Name="RoomEnableButton" MinWidth="30" MinHeight="30" Margin="0,60,5,0" Background="White" Content="R" FontSize="18" MaxWidth="30" MaxHeight="30" Click="RoomEnableButton_Click" />
+            <Button x:Name="PointEnableButton" Grid.Row="1" MinWidth="30" MinHeight="30" MaxWidth="30" MaxHeight="30" Foreground="#FFF10C0C" Content="P" Background="White" FontSize="18" Margin="0,0,5,0" Click="PointEnableButton_Click" />
+        </Grid>
+        
+        <Grid Grid.Column="2" HorizontalAlignment="Right" Height="auto" VerticalAlignment="Top" MinWidth="100" MaxWidth="1000" Margin="0,15,0,0" Background="CadetBlue">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto" />
                 <RowDefinition Height="auto"/>
