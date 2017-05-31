@@ -88,6 +88,9 @@
     <Compile Include="View\Pages\CreateProjectPage.xaml.cs">
       <DependentUpon>CreateProjectPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Pages\OpenExistProjectPage.xaml.cs">
+      <DependentUpon>OpenExistProjectPage.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\ConnectToDBWindows.xaml.cs">
       <DependentUpon>ConnectToDBWindows.xaml</DependentUpon>
     </Compile>
@@ -121,6 +124,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="View\Pages\CreateProjectPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Pages\OpenExistProjectPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

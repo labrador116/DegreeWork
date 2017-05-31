@@ -15,7 +15,7 @@
         <Border Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="auto" Height="auto" BorderBrush="Black" BorderThickness="1" Margin="15" >
             <Canvas x:Name="CanvasAreaForSchemeOfRoom" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="100" MaxHeight="500" MinWidth="100" MaxWidth="500" Width="500" Height="400" Opacity="1" Background="AliceBlue"                   
                     MouseLeftButtonDown="MyIP_MouseLeftButtonDown" 
-                    MouseMove="MyIP_MouseMove" MouseLeftButtonUp="Window_MouseLeftButtonUp"/>
+                    MouseMove="MyIP_MouseMove" MouseLeftButtonUp="Window_MouseLeftButtonUp" Initialized="CanvasAreaForSchemeOfRoom_Initialized"/>
         </Border>
         <Grid Grid.Column="1" HorizontalAlignment="Stretch" Height="auto" VerticalAlignment="Top" MinWidth="100" MaxWidth="1000" Margin="0,15,0,0" Background="CadetBlue">
             <Grid.RowDefinitions>

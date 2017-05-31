@@ -171,7 +171,9 @@ namespace DegreeWork
 
                     SingleSpaceParams.getInstance(_WidthOfArea, _HeightOfArea);
                     nav = NavigationService.GetNavigationService(this);
-                    nav.Navigate(new System.Uri("View/Pages/MainWindowPage.xaml", UriKind.RelativeOrAbsolute));
+
+                    MainWindowPage mainWindow = new MainWindowPage(_Context);
+                    nav.Navigate(mainWindow);
                 }
                 catch
                 {

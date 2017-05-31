@@ -3,6 +3,7 @@ C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\D
 C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\View\Pages\FirstPage.g.cs
 C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\View\Pages\MainWindowPage.g.cs
 C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\View\Pages\CreateProjectPage.g.cs
+C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\View\Pages\OpenExistProjectPage.g.cs
 C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\View\Windows\ConnectToDBWindows.g.cs
 C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\View\Windows\CreateCustomerWindows.g.cs
 C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\App.g.cs
@@ -23,6 +24,7 @@ C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\D
 C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\View\Pages\FirstPage.baml
 C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\View\Pages\MainWindowPage.baml
 C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\View\Pages\CreateProjectPage.baml
+C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\View\Pages\OpenExistProjectPage.baml
 C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\View\Windows\ConnectToDBWindows.baml
 C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\View\Windows\CreateCustomerWindows.baml
 C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\DegreeWork.g.resources

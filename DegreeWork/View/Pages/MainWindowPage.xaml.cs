@@ -1,4 +1,5 @@
-﻿using DegreeWork.Instances;
+﻿using DataBaseStruct;
+using DegreeWork.Instances;
 using DegreeWork.SpaceParam;
 using System;
 using System.Collections.Generic;
@@ -26,6 +27,7 @@ namespace DegreeWork
         private const int SIZE = 1;
         private const int SHIFT = SIZE / 2;
 
+        DB_ConnectionContext _Context;
         private Point prev;
         private SolidColorBrush color = new SolidColorBrush(Colors.Black);
         private bool isPaint = false;
@@ -34,11 +36,12 @@ namespace DegreeWork
         private Line line3;
         private Line line4;
 
-        public MainWindowPage()
+        public MainWindowPage(DB_ConnectionContext context)
         {
             InitializeComponent();
+            _Context = context;
         }
-    
+        
         private void MyIP_MouseMove(object sender, MouseEventArgs e)
         {
             if (!isPaint) return;
@@ -118,27 +121,37 @@ namespace DegreeWork
     
         private void Window_MouseLeftButtonUp(object sender, MouseButtonEventArgs e)
         {
-            RectangleRoom room = new RectangleRoom
+            if (line != null && line2 != null)
             {
-                X1 = Convert.ToInt32(line.X1),
-                Y1 = Convert.ToInt32(line.Y1),
+                RectangleRoom room = new RectangleRoom
+                {
+                    X1 = Convert.ToInt32(line.X1),
+                    Y1 = Convert.ToInt32(line.Y1),
 
-                X2 = Convert.ToInt32(line.X2),
-                Y2 = Convert.ToInt32(line.Y2),
+                    X2 = Convert.ToInt32(line.X2),
+                    Y2 = Convert.ToInt32(line.Y2),
 
-                X3 = Convert.ToInt32(line2.X2),
-                Y3 = Convert.ToInt32(line2.Y2),
+                    X3 = Convert.ToInt32(line2.X2),
+                    Y3 = Convert.ToInt32(line2.Y2),
 
-                X4 = Convert.ToInt32(line4.X2),
-                Y4 = Convert.ToInt32(line4.Y2)
-            };
-            SingleSpaceParams.getInstance().Rooms.Add(room); 
+                    X4 = Convert.ToInt32(line4.X2),
+                    Y4 = Convert.ToInt32(line4.Y2)
+                };
+                SingleSpaceParams.getInstance().Rooms.Add(room);
+            }
 
             line = null;
             line2 = null;
             line3 = null;
             line4 = null;
             isPaint = false;
+        }
+
+        private void CanvasAreaForSchemeOfRoom_Initialized(object sender, EventArgs e)
+        {
+            Canvas canvas = (Canvas)sender;
+            canvas.Width = SingleSpaceParams.getInstance().Width;
+            canvas.Height = SingleSpaceParams.getInstance().Height;
         }
     }
 }
