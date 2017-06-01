@@ -39,6 +39,8 @@ namespace DataBaseStruct
             public double Height { get; set; }
             public virtual Project ProjectNumber { get; set; }
             public virtual List<InstallationPosition> Positions { get; set; }
+            public virtual List<Room> Rooms { get; set; }
+            public virtual List<ControlPoint> Point { get; set; }
         }
 
         public class InstallationPosition
@@ -49,6 +51,34 @@ namespace DataBaseStruct
             public int Coord_Y { get; set; }
             public virtual SchemeOfBuilding Scheme { get; set; }
             public virtual List<PlacmentOfModules> Placment { get; set; }
+        }
+
+        public class Room
+        {
+            [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+            public int RoomId { get; set; }
+            public virtual List<CoordinateOfCorner> CoordCorner1 { get; set; }
+            public virtual List<CoordinateOfCorner> CoordCorner2 { get; set; }
+            public virtual List<CoordinateOfCorner> CoordCorner3 { get; set; }
+            public virtual List<CoordinateOfCorner> CoordCorner4 { get; set; }
+            public virtual SchemeOfBuilding Scheme { get; set; }
+        }
+
+        public class CoordinateOfCorner
+        {
+            [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+            public int CoordinateId { get; set; }
+            public int Coord_X { get; set; }
+            public int Coord_Y { get; set; }
+        }
+
+        public class ControlPoint
+        {
+            [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
+            public int PointId { get; set; }
+            public int Coord_X { get; set; }
+            public int Coord_Y { get; set; }
+            public virtual SchemeOfBuilding Scheme { get; set; }
         }
 
         public class PlacmentOfModules

@@ -6,8 +6,8 @@
         xmlns:local="clr-namespace:DegreeWork"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         mc:Ignorable="d"
-        Title="MainWindow" Height="600" Width="850" Background="WhiteSmoke" >
-    <Grid HorizontalAlignment="Center">
+        Title="MainWindow" Background="WhiteSmoke" HorizontalAlignment="Center" MinWidth="850" MinHeight="600" >
+    <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>

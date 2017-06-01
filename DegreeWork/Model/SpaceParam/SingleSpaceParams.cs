@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static DataBaseStruct.Model;
+using DataBaseStruct;
 
 namespace DegreeWork.SpaceParam
 {
@@ -20,6 +22,7 @@ namespace DegreeWork.SpaceParam
         private int sumOfChromosomeInPopulation;
         private List<ResultModel> GlobalResultContainer = new List<ResultModel>();
         private List<RectangleRoom> _rooms = new List<RectangleRoom>();
+        private List<ControlPoint> _controlPoints = new List<ControlPoint>();
 
         private SingleSpaceParams(int width, int height)
         {
@@ -39,6 +42,7 @@ namespace DegreeWork.SpaceParam
         public int SumOfChromosomeInPopulation { get => sumOfChromosomeInPopulation; set => sumOfChromosomeInPopulation = value; }
         public int TheBestResolve { get => _theBestResolve; set => _theBestResolve = value; }
         public List<RectangleRoom> Rooms { get => _rooms; set => _rooms = value; }
+        public List<ControlPoint> ControlPoints { get => _controlPoints; set => _controlPoints = value; }
 
         public static SingleSpaceParams getInstance()
         {
