@@ -79,7 +79,7 @@ namespace DegreeWork
                 SchemeOfBuilding scheme = project.Scheme.First();
                 SingleSpaceParams.getInstance(Convert.ToInt32(scheme.Width), Convert.ToInt32(scheme.Height));
 
-                MainWindowPage mainWindow = new MainWindowPage(_Context);
+                MainWindowPage mainWindow = new MainWindowPage(_Context, project.ProjectId);
                 nav = NavigationService.GetNavigationService(this);
                 nav.Navigate(mainWindow);
             }

@@ -76,7 +76,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
-    <Compile Include="Model\Instances\ControlPoint.cs" />
+    <Compile Include="Model\Instances\ControlPointInst.cs" />
     <Compile Include="View\Pages\CreateDataBasePage.xaml.cs">
       <DependentUpon>CreateDataBasePage.xaml</DependentUpon>
     </Compile>

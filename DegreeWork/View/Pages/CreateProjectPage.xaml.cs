@@ -163,6 +163,8 @@ namespace DegreeWork
                 scheme.Width = _WidthOfArea;
                 scheme.Height = _HeightOfArea;
                 scheme.ProjectNumber = project;
+                scheme.Point = new List<ControlPoint>();
+                //ToDo Выделить память под все элементы схемы. Вернуть прежнюю логику, после выделения памяти будет работать. Продебажить создание новых схем
 
                 try
                 {
@@ -171,8 +173,8 @@ namespace DegreeWork
 
                     SingleSpaceParams.getInstance(_WidthOfArea, _HeightOfArea);
                     nav = NavigationService.GetNavigationService(this);
-
-                    MainWindowPage mainWindow = new MainWindowPage(_Context);
+                    
+                    MainWindowPage mainWindow = new MainWindowPage(_Context, project.ProjectId);
                     nav.Navigate(mainWindow);
                 }
                 catch

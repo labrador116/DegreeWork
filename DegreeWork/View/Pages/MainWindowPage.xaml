@@ -59,7 +59,7 @@
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" HorizontalAlignment="Left" Height="auto" VerticalAlignment="Top"  Width="auto" Orientation="Horizontal" Margin="80,0,0,0">
-                    <Button Height="auto" Width="auto" VerticalAlignment="Bottom" HorizontalAlignment="Left">
+                    <Button x:Name="StartAcommButton" Height="auto" Width="auto" VerticalAlignment="Bottom" HorizontalAlignment="Left" Click="StartAcommButton_Click">
                         <Button.Template>
                             <ControlTemplate>
                                 <Grid x:Name="controlLayout">

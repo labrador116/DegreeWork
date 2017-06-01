@@ -6,10 +6,16 @@ using System.Threading.Tasks;
 
 namespace DegreeWork.Model.Instances
 {
-   public class ControlPoint
+   public class ControlPointInst
     {
         int X;
         int Y;
+
+        public ControlPointInst (int x, int y)
+        {
+            X = x;
+            Y = y;
+        }
 
         public int X1 { get => X; set => X = value; }
         public int Y1 { get => Y; set => Y = value; }

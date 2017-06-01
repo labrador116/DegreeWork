@@ -57,20 +57,17 @@ namespace DataBaseStruct
         {
             [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             public int RoomId { get; set; }
-            public virtual List<CoordinateOfCorner> CoordCorner1 { get; set; }
-            public virtual List<CoordinateOfCorner> CoordCorner2 { get; set; }
-            public virtual List<CoordinateOfCorner> CoordCorner3 { get; set; }
-            public virtual List<CoordinateOfCorner> CoordCorner4 { get; set; }
+            public int Coord_X1 { get; set; }
+            public int Coord_X2 { get; set; }
+            public int Coord_X3 { get; set; }
+            public int Coord_X4 { get; set; }
+            public int Coord_Y1 { get; set; }
+            public int Coord_Y2 { get; set; }
+            public int Coord_Y3 { get; set; }
+            public int Coord_Y4 { get; set; }
             public virtual SchemeOfBuilding Scheme { get; set; }
         }
 
-        public class CoordinateOfCorner
-        {
-            [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
-            public int CoordinateId { get; set; }
-            public int Coord_X { get; set; }
-            public int Coord_Y { get; set; }
-        }
 
         public class ControlPoint
         {

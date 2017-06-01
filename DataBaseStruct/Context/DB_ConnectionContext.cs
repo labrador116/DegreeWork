@@ -22,7 +22,7 @@ namespace DataBaseStruct
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
+            
         }
 
         public DbSet<Customer> Customers { get; set; }
@@ -30,7 +30,6 @@ namespace DataBaseStruct
         public DbSet<SchemeOfBuilding> Schemes { get; set; }
         public DbSet<InstallationPosition> InstallationPositions { get; set; }
         public DbSet<Room> Rooms { get; set; }
-        public DbSet<CoordinateOfCorner> CornerCoordinates { get; set; }
         public DbSet<ControlPoint> Points { get; set; }
         public DbSet<PlacmentOfModules> Placements { get; set; }
         public DbSet<ModelsOfModules> Models { get; set; }
