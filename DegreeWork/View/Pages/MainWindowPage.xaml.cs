@@ -41,6 +41,7 @@ namespace DegreeWork
         bool _IsRoom = true;
         bool _IsPoint = false;
         int _projectId;
+        List<ModelsOfModules> _Models;
 
         public MainWindowPage(DB_ConnectionContext context, int projectId)
         {
@@ -48,12 +49,14 @@ namespace DegreeWork
             _Context = context;
             _projectId = projectId;
 
-            List<Room> rooms = _Context.Rooms.Where(c => c.Scheme.ProjectNumber.ProjectId.Equals(_projectId)).ToList();
-            
-            if (rooms != null )
+            SchemeOfBuilding scheme = _Context.Schemes.Where(c => c.ProjectNumber.ProjectId.Equals(_projectId)).First();
+            List<Room> rooms = null;
+            if (scheme.Rooms != null )
             {
-                if (rooms.Count > 0)
+                if (scheme.Rooms.Count() > 0)
                 {
+                    rooms = scheme.Rooms;
+
                     foreach (Room room in rooms)
                     {
                         int coord_X1 = room.Coord_X1;
@@ -120,9 +123,55 @@ namespace DegreeWork
                         CanvasAreaForSchemeOfRoom.Children.Add(line2);
                         CanvasAreaForSchemeOfRoom.Children.Add(line3);
                         CanvasAreaForSchemeOfRoom.Children.Add(line4);
+
+                        RectangleRoom rectRoom = new RectangleRoom();
+                        rectRoom.X1 = room.Coord_X1;
+                        rectRoom.Y1 = room.Coord_Y1;
+                        rectRoom.X2 = room.Coord_X2;
+                        rectRoom.Y2 = room.Coord_Y2;
+                        rectRoom.X3 = room.Coord_X3;
+                        rectRoom.Y3 = room.Coord_Y3;
+                        rectRoom.X4 = room.Coord_X4;
+                        rectRoom.Y4 = room.Coord_Y4;
+                        SingleSpaceParams.getInstance().Rooms.Add(rectRoom);
                     }
                 }
             }
+
+            if (scheme.Point != null)
+            {
+                List<ControlPoint> points = null;
+                if (scheme.Point.Count > 0)
+                {
+                    points = scheme.Point;
+
+                    foreach (ControlPoint point in points)
+                    {
+                        pointLine = new Line
+                        {
+                            Stroke = new SolidColorBrush
+                            {
+                                Color = Colors.Red,
+                            },
+                            StrokeThickness = 10,
+                            X1 = point.Coord_X,
+                            Y1 = point.Coord_Y,
+                            X2 = point.Coord_X + 1,
+                            Y2 = point.Coord_Y + 1,
+                            StrokeStartLineCap = PenLineCap.Round,
+                            StrokeEndLineCap = PenLineCap.Round,
+                        };
+                        CanvasAreaForSchemeOfRoom.Children.Add(pointLine);
+
+                        ControlPointInst controlPoint = new ControlPointInst(
+                    Convert.ToInt32(point.Coord_X),
+                    Convert.ToInt32(point.Coord_Y));
+
+                        SingleSpaceParams.getInstance().ControlPoints.Add(controlPoint);
+                    }
+                }
+            }
+            _Models = _Context.Models.ToList();
         }
         
         private void MyIP_MouseMove(object sender, MouseEventArgs e)
@@ -201,6 +250,9 @@ namespace DegreeWork
             {
                 if (isPaint) { return; }
 
+                CanvasAreaForSchemeOfRoom.Focusable = true;
+                CanvasAreaForSchemeOfRoom.Focus();
+                
                 isPaint = true;
                 prev = Mouse.GetPosition(CanvasAreaForSchemeOfRoom);
                 var dot = new Ellipse { Width = SIZE, Height = SIZE, Fill = color };
@@ -230,7 +282,7 @@ namespace DegreeWork
                         X4 = Convert.ToInt32(line4.X2),
                         Y4 = Convert.ToInt32(line4.Y2)
                     };
-                    SingleSpaceParams.getInstance().Rooms.Add(room);
+                   // SingleSpaceParams.getInstance().Rooms.Add(room);
                 }
 
                 line = null;
@@ -256,7 +308,6 @@ namespace DegreeWork
                     Y2 = point.Y + 1,
                     StrokeStartLineCap = PenLineCap.Round,
                     StrokeEndLineCap = PenLineCap.Round,
-                  
                 };
                 ControlPointInst controlPoint = new ControlPointInst(
                     Convert.ToInt32(pointLine.X1), 
@@ -272,6 +323,7 @@ namespace DegreeWork
             Canvas canvas = (Canvas)sender;
             canvas.Width = SingleSpaceParams.getInstance().Width;
             canvas.Height = SingleSpaceParams.getInstance().Height;
+
             
         }
 
@@ -324,7 +376,7 @@ namespace DegreeWork
                     point.Coord_Y = cp.Y1;
                     scheme.Point.Add(point);
                 }
-                //_Context.Schemes.Add(scheme);
+              
 
                 foreach (RectangleRoom rm in SingleSpaceParams.getInstance().Rooms)
                 {
@@ -340,19 +392,63 @@ namespace DegreeWork
 
                     room.Coord_X4 = rm.X4;
                     room.Coord_Y4 = rm.Y4;
-                    room.Scheme = scheme;
-                    _Context.Rooms.Add(room);
-                
-                   // scheme.Rooms.Add(room);
                     
+                    scheme.Rooms.Add(room);
                 }
-               
+                
                 _Context.SaveChanges();
             }
             catch(Exception ex)
             {
                 MessageBox.Show("Ошибка обновления базы данных!");
             }
+        }
+
+        private void CanvasAreaForSchemeOfRoom_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                if (_IsRoom)
+                {
+                    if (line != null && line2 != null)
+                    {
+                        RectangleRoom room = new RectangleRoom
+                        {
+                            X1 = Convert.ToInt32(line.X1),
+                            Y1 = Convert.ToInt32(line.Y1),
+
+                            X2 = Convert.ToInt32(line.X2),
+                            Y2 = Convert.ToInt32(line.Y2),
+
+                            X3 = Convert.ToInt32(line2.X2),
+                            Y3 = Convert.ToInt32(line2.Y2),
+
+                            X4 = Convert.ToInt32(line4.X2),
+                            Y4 = Convert.ToInt32(line4.Y2)
+                        };
+                        SingleSpaceParams.getInstance().Rooms.Add(room);
+                    }
+
+                    line = null;
+                    line2 = null;
+                    line3 = null;
+                    line4 = null;
+                    isPaint = false;
+                }
+            }
+        }
+    
+        private void selectWiFimodelsButton_Click(object sender, RoutedEventArgs e)
+        {
+            ChooseModelOfModule dialogChose = new ChooseModelOfModule(_Models);
+            dialogChose.SendSelected += DialogChose_SendSelected;
+            dialogChose.ShowDialog();
+        }
+
+        private void DialogChose_SendSelected(ModelsOfModules module)
+        {
+            SingleSpaceParams.getInstance().ModulesRadius.Add(int.Parse(module.ModelRadius));
+            selectedModelsOfModulesLabel.Text += "\n\t" + module.ModelName;
         }
     }
 }

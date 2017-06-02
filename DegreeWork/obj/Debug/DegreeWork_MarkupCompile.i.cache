@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\App.xaml
-71130250055
+8-1296183248
 
-25-248459287
+26-1895502478
 17-1872772706
-View\Pages\CreateDataBasePage.xaml;View\Pages\FirstPage.xaml;View\Pages\MainWindowPage.xaml;View\Pages\CreateProjectPage.xaml;View\Pages\OpenExistProjectPage.xaml;View\Windows\ConnectToDBWindows.xaml;View\Windows\CreateCustomerWindows.xaml;
+View\Pages\CreateDataBasePage.xaml;View\Pages\FirstPage.xaml;View\Pages\MainWindowPage.xaml;View\Pages\CreateProjectPage.xaml;View\Pages\OpenExistProjectPage.xaml;View\Windows\ChooseModelOfModule.xaml;View\Windows\ConnectToDBWindows.xaml;View\Windows\CreateCustomerWindows.xaml;
 
 True
 

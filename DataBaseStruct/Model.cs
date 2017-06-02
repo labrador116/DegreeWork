@@ -83,7 +83,7 @@ namespace DataBaseStruct
             [Key, DatabaseGenerated(DatabaseGeneratedOption.Identity)]
             public int PlacementId { get; set; }
             public virtual InstallationPosition Position { get; set; }
-            public virtual List<ModelsOfModules> Model { get; set; }
+            public virtual ModelsOfModules Model { get; set; }
         }
 
         public class ModelsOfModules

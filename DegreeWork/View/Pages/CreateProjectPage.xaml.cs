@@ -35,7 +35,8 @@ namespace DegreeWork
         public CreateProjectPage()
         {
             InitializeComponent();
-           
+            SingleSpaceParams.KillSingle();
+
             if (createCustomerTextBlock.IsEnabled == false)
             {
                 createCustomerTextBlock.Opacity=0.1;
@@ -164,7 +165,7 @@ namespace DegreeWork
                 scheme.Height = _HeightOfArea;
                 scheme.ProjectNumber = project;
                 scheme.Point = new List<ControlPoint>();
-                //ToDo Выделить память под все элементы схемы. Вернуть прежнюю логику, после выделения памяти будет работать. Продебажить создание новых схем
+                scheme.Rooms = new List<Room>();
 
                 try
                 {

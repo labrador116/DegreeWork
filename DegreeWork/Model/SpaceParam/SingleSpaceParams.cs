@@ -24,6 +24,8 @@ namespace DegreeWork.SpaceParam
         private List<ResultModel> GlobalResultContainer = new List<ResultModel>();
         private List<RectangleRoom> _rooms = new List<RectangleRoom>();
         private List<ControlPointInst> _controlPoints = new List<ControlPointInst>();
+        private List<ModelsOfModules> _models = new List<ModelsOfModules>();
+        private List<int> _modulesRadius = new List<int>();
 
         private SingleSpaceParams(int width, int height)
         {
@@ -44,6 +46,8 @@ namespace DegreeWork.SpaceParam
         public int TheBestResolve { get => _theBestResolve; set => _theBestResolve = value; }
         public List<RectangleRoom> Rooms { get => _rooms; set => _rooms = value; }
         public List<ControlPointInst> ControlPoints { get => _controlPoints; set => _controlPoints = value; }
+        public List<ModelsOfModules> Models { get => _models; set => _models = value; }
+        public List<int> ModulesRadius { get => _modulesRadius; set => _modulesRadius = value; }
 
         public static SingleSpaceParams getInstance()
         {
@@ -52,6 +56,14 @@ namespace DegreeWork.SpaceParam
                 throw new Exception("SingleSpaceParams isn't created");
             }
             return instance;
+        }
+
+        public static void KillSingle()
+        {
+            if (instance != null)
+            {
+                instance = null;
+            }
         }
 
         public static SingleSpaceParams getInstance(int width, int height)

@@ -92,6 +92,9 @@
     <Compile Include="View\Pages\OpenExistProjectPage.xaml.cs">
       <DependentUpon>OpenExistProjectPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\ChooseModelOfModule.xaml.cs">
+      <DependentUpon>ChooseModelOfModule.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\ConnectToDBWindows.xaml.cs">
       <DependentUpon>ConnectToDBWindows.xaml</DependentUpon>
     </Compile>
@@ -129,6 +132,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Pages\OpenExistProjectPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\ChooseModelOfModule.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -30,6 +30,7 @@ namespace DegreeWork
         public OpenExistProjectPage()
         {
             InitializeComponent();
+            SingleSpaceParams.KillSingle();
 
             if (chooseProjectTextBlock.IsEnabled == false)
             {

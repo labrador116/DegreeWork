@@ -14,9 +14,9 @@
             <ColumnDefinition Width="auto"/>
         </Grid.ColumnDefinitions>
         <Border Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="auto" Height="auto" BorderBrush="Black" BorderThickness="1" Margin="15" >
-            <Canvas x:Name="CanvasAreaForSchemeOfRoom" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="100" MaxHeight="500" MinWidth="100" MaxWidth="500" Width="500" Height="400" Opacity="1" Background="AliceBlue"                   
+            <Canvas x:Name="CanvasAreaForSchemeOfRoom" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="100" MinWidth="100" Width="500" Height="400" Opacity="1" Background="AliceBlue"                   
                     MouseLeftButtonDown="MyIP_MouseLeftButtonDown" 
-                    MouseMove="MyIP_MouseMove" MouseLeftButtonUp="Window_MouseLeftButtonUp" Initialized="CanvasAreaForSchemeOfRoom_Initialized"/>
+                    MouseMove="MyIP_MouseMove" MouseLeftButtonUp="Window_MouseLeftButtonUp" Initialized="CanvasAreaForSchemeOfRoom_Initialized" UIElement.KeyUp="CanvasAreaForSchemeOfRoom_KeyUp"/>
         </Border>
 
         <Grid Grid.Column="1" >
@@ -37,9 +37,9 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" HorizontalAlignment="Left" Height="auto" VerticalAlignment="Top" Width="auto" Orientation="Horizontal">
                 <Label x:Name="label" Content="Выбор устройств для размещения" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top" FontSize="14"/>
-                <Button x:Name="selectWiFimodelsButton" Width="auto" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5">Добавить</Button>
+                <Button x:Name="selectWiFimodelsButton" Width="auto" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5" Click="selectWiFimodelsButton_Click">Добавить</Button>
             </StackPanel>
-            <Label x:Name="label1" Grid.Row="1" Content="Выбранные устройства:" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top"/>
+            <TextBlock x:Name="selectedModelsOfModulesLabel" Grid.Row="1" Text="Выбранные устройства:" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top"/>
             <Label x:Name="label2" Content="Настрйки генетического алгоритма:" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>
 
             <Grid Grid.Row="3" HorizontalAlignment="Stretch" Height="auto" Margin="10" VerticalAlignment="Stretch" Width="auto" MinWidth="100" MaxWidth="1000">
