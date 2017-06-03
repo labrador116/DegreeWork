@@ -12,6 +12,7 @@ namespace DegreeWork.ChromosomeModel
         int _oX;
         int _oY;
         int _numOfPosition;
+        double coverageOfArea;
         String _encodeValue;
 
         public Gene(int radius, int oX, int oY, int numOfPosition)
@@ -32,6 +33,7 @@ namespace DegreeWork.ChromosomeModel
         public int OY { get => _oY; set => _oY = value; }
         public int NumOfPosition { get => _numOfPosition; set => _numOfPosition = value; }
         public string EncodeValue { get => _encodeValue; set => _encodeValue = value; }
+        public double CoverageOfArea { get => coverageOfArea; set => coverageOfArea = value; }
 
         public bool Equals(Gene other)
         {

@@ -42,58 +42,22 @@ namespace DegreeWork.Service
         {
             _populationContainer = new Population();
             parOps.MaxDegreeOfParallelism = Environment.ProcessorCount;
-
-            for (int i=0; i<10; i++)
-             {
-                 Chromosome chromosome = new Chromosome();
-                 int countOfPosition = 0;
-                 foreach( int item in _radiusContainer)
-                 {
-                     Gene gene;
-
-                     if (i == 0) {
-                         gene = new Gene(item,
-                         getRandomValue(0, SingleSpaceParams.getInstance().Width),
-                         getRandomValue(0, SingleSpaceParams.getInstance().Height),
-                         countOfPosition
-                         );
-                     } else {
-                         gene = new Gene(item);
-                     }
-                     chromosome.Container.Add(gene);
-                     countOfPosition++;
-                 }
-                 chromosome.AreaWidth = SingleSpaceParams.getInstance().Width;
-                 chromosome.AreaHeight = SingleSpaceParams.getInstance().Height;
-                 _populationContainer.GetSetPopulationContainer.Add(chromosome);
-             }
-
-            if (_populationContainer != null)
-            { 
-                Executing();
-            }
+            Executing();
         }
 
         public void Executing()
         {
-            
-           if(GeneticAlgorithm.GA.CheckToArea(
-               _populationContainer.GetSetPopulationContainer.ElementAt(0)))
-            {
-                WrongParams(this, new EventArgs());
-                return;
-            }
-
+            /*Создание первой популяции*/
             createFirstPopulation();
             
             _result = new List<ResultModel>();
             int counter = 0;
             while (true)
             {
+                //Условия оценки первой популяции
                 if (counter == 0)
                 {
                     //Оценивание хромосом
-                   // Parallel.ForEach(_populationContainer.GetSetPopulationContainer,parOps, chr =>
                    foreach(Chromosome chr in _populationContainer.GetSetPopulationContainer)
                      {
                          ResultModel resM = new ResultModel();
@@ -214,9 +178,28 @@ namespace DegreeWork.Service
 
         private void createFirstPopulation()
         {
-            GeneticAlgorithm.GA.CheckIntersection(_populationContainer.GetSetPopulationContainer.ElementAt(0));
+            /*Создаем популяцию из 10 хромосом. Каждая гена имеет уникальное размещение. */
+            for (int i = 0; i < 10; i++)
+            {
+                Chromosome chromosome = new Chromosome();
+                int countOfPosition = 0;
+                foreach (int item in _radiusContainer)
+                {
+                    Gene gene = new Gene(item,
+                        getRandomValue(0, SingleSpaceParams.getInstance().Width),
+                        getRandomValue(0, SingleSpaceParams.getInstance().Height),
+                        countOfPosition
+                        );
 
+                    chromosome.Container.Add(gene);
+                    countOfPosition++;
+                }
+                GeneticAlgorithm.GA.CheckIntersection(chromosome);
+                _populationContainer.GetSetPopulationContainer.Add(chromosome);
+            }
+            
             /*Хромосома с допустимыми координатами размещения*/
+            /*
             Chromosome chromosome = _populationContainer.GetSetPopulationContainer.ElementAt(0);
             Coordinate coords;
             List<Coordinate> coordsList = new List<Coordinate>();
@@ -227,34 +210,7 @@ namespace DegreeWork.Service
                 coords.CoordY = gene.OY;
                 coords.Position = gene.NumOfPosition;
                 coordsList.Add(coords);
-            }
-
-            //Cоздаем популяцию
-            for (int i = 1; i < 10; i++)
-            {
-                List<Coordinate> lc = new List<Coordinate>(coordsList);
-                Chromosome chr = _populationContainer.GetSetPopulationContainer.ElementAt(i);
-                foreach (Gene gene in chr.Container)
-                {
-
-                    int randomPositionCoord = getRandomValue(0, lc.Count);
-                    Coordinate coordinate = lc.ElementAt(randomPositionCoord);
-
-                    gene.OX = coordinate.CoordX;
-                    gene.OY = coordinate.CoordY;
-                    gene.NumOfPosition = coordinate.Position;
-
-                    lc.RemoveAt(randomPositionCoord);
-                }
-
-                if (GeneticAlgorithm.GA.CheckIntersection(chr, 0))
-                {
-                    i--;
-                }
-
-                chr.AreaWidth = SingleSpaceParams.getInstance().Width;
-                chr.AreaHeight = SingleSpaceParams.getInstance().Height;
-            }
+            }*/
         }
     }
 }

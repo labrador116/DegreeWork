@@ -5,9 +5,20 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DegreeWork"
         xmlns:System="clr-namespace:System;assembly=mscorlib"
+        xmlns:cm="clr-namespace:System.ComponentModel;assembly=System"
         mc:Ignorable="d"
         Title="MainWindow" Background="WhiteSmoke" HorizontalAlignment="Center" MinWidth="850" MinHeight="600" >
+
+    <Page.Resources>
+        <cm:BackgroundWorker x:Key="backgroundWorker" WorkerReportsProgress="True" DoWork="BackgroundWorker_DoWork"></cm:BackgroundWorker>
+    </Page.Resources>
+
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto"/>
@@ -18,7 +29,8 @@
                     MouseLeftButtonDown="MyIP_MouseLeftButtonDown" 
                     MouseMove="MyIP_MouseMove" MouseLeftButtonUp="Window_MouseLeftButtonUp" Initialized="CanvasAreaForSchemeOfRoom_Initialized" UIElement.KeyUp="CanvasAreaForSchemeOfRoom_KeyUp"/>
         </Border>
-
+        <Label x:Name="pressEnterLabel" Content="Для размещения нажмите клавишу Enter" Grid.Row="1" HorizontalAlignment="Center" FontSize="14" Foreground="#FF5479B9" Visibility="Collapsed" />
+        <ProgressBar x:Name="geneticAlgProgressBar" Grid.Row="2" MinWidth="201" MinHeight="20" Foreground="#FF067AB0" Margin="15,0" Visibility="Collapsed" />
         <Grid Grid.Column="1" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -51,11 +63,11 @@
                 </Grid.RowDefinitions>
                 <StackPanel Grid.Row="0" HorizontalAlignment="Left" Height="auto" VerticalAlignment="Top" Width="auto" Orientation="Horizontal">
                     <Label Content="Вероятность мутации :"/>
-                    <TextBox Width="auto" MinWidth="50 " />
+                    <TextBox x:Name="probabilityOfMutationTextBox" Width="auto" MinWidth="50 " FontSize="16" PreviewTextInput="probabilityOfMutationTextBox_PreviewTextInput" />
                 </StackPanel>
                 <StackPanel Grid.Row="1" HorizontalAlignment="Left" Height="auto" VerticalAlignment="Top" Width="auto" Orientation="Horizontal">
                     <Label Content="Колличество хромосом в популяции :"/>
-                    <TextBox Width="auto" MinWidth="50 " />
+                    <TextBox x:Name="sumOfChromosome" Width="auto" MinWidth="50 " FontSize="16" PreviewTextInput="sumOfChromosome_PreviewTextInput" />
                 </StackPanel>
 
                 <StackPanel Grid.Row="2" HorizontalAlignment="Left" Height="auto" VerticalAlignment="Top"  Width="auto" Orientation="Horizontal" Margin="80,0,0,0">

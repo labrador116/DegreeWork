@@ -13,28 +13,8 @@ namespace DegreeWork.GeneticAlgorithm
 {
    public class GA
     {
-        /*Проверка всех окружностей на занимаемую плоскость*/
-        public static bool CheckToArea(Chromosome chromosome)
-        {
-            double sumCirclesArea = 0;
-
-            List<Gene> genes = chromosome.Container;
-
-            foreach (Gene item in genes)
-            {
-                sumCirclesArea += Math.PI * (item.Radius * item.Radius);
-            }
-
-            if ((SingleSpaceParams.getInstance().Width * SingleSpaceParams.getInstance().Height) / sumCirclesArea < 2)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-        /*Проверка пересечений*/
+       
+        /*Проверка пересечений в процессе работы алгоритма*/
         public static bool CheckIntersection(Chromosome chromosome, int val)
         {
             int length = chromosome.Container.Count;
@@ -47,9 +27,7 @@ namespace DegreeWork.GeneticAlgorithm
                     {
                         bool resultValue = AlgorithmOfCheckIntersection(
                             chromosome.Container.ElementAt(i),
-                            chromosome.Container.ElementAt(j),
-                            chromosome.AreaWidth,
-                            chromosome.AreaHeight
+                            chromosome.Container.ElementAt(j)
                             );
 
                         if (resultValue == true)
@@ -61,7 +39,10 @@ namespace DegreeWork.GeneticAlgorithm
             }
             return false;
         }
-        /*Проверка пересечений*/
+
+        /*Проверка пересечений и вычисление площади покрытия для создания первой популяции.
+         Проверка покрытия плошади на обязательных точках. Необходимо сделать, что бы сначала выполнялось размещение 
+         с учетом точек*/
         public static void CheckIntersection(Chromosome chromosome)
         {
             int length = chromosome.Container.Count;
@@ -70,80 +51,124 @@ namespace DegreeWork.GeneticAlgorithm
             {
                 for (int j = 0; j < length; j++)
                 {
+                    //ToDo Самая первая гена не проверяется на пересечения с границами, нужно исправить.
                     if (j != i)
                     {
                         bool resultValue = AlgorithmOfCheckIntersection(
                             chromosome.Container.ElementAt(i),
-                            chromosome.Container.ElementAt(j),
-                            chromosome.AreaWidth,
-                            chromosome.AreaHeight
+                            chromosome.Container.ElementAt(j)
                             );
 
-                        if (resultValue == true )
+                        if (resultValue == true)
                         {
-                            ExecuteService.RefactorBadGene(chromosome.Container.ElementAt(i));
+                            ExecuteService.RefactorBadGene(chromosome.Container.ElementAt(j));
                             j = -1;
                         }
+                        else
+                        {
+                            // Самый первый ген (окружность) получает зону покрытия равной своей площади
+                            if (i == 0)
+                            {
+                                Gene gene = chromosome.Container.ElementAt(i);
+                                chromosome.Container.ElementAt(i).CoverageOfArea = Math.PI * (gene.Radius * gene.Radius);
+                            }
+                            else
+                            {
+                                //Условие оценки: Оценивается пересекающая окружность, а не пересекаемая.
+                                if (j < i)
+                                {
+                                    //отправляем i=B, j=A
+                                    AlghoritmOfSettingCovarage(chromosome.Container.ElementAt(j),
+                                      chromosome.Container.ElementAt(i)
+                                      );
+                                }
+                            }
+                        }
                     }
-                }
+                }  
             }
-        }  
-        private static bool AlgorithmOfCheckIntersection(Gene A, Gene B, int width, int height)
+        }
+        
+        /*Алгоритм оценки покрываемого пространства. Оценивается ген B.*/
+        private static void AlghoritmOfSettingCovarage(Gene A, Gene B)
         {
+            /*Длина прямой от центра первого круга до центра второго круга*/
+            double radiusLenght = Math.Sqrt(
+                ((A.OX - B.OX) * (A.OX - B.OX)) +
+                ((A.OY - B.OY) * (A.OY - B.OY))
+                );
+
+            //Если пересечения нет, то площадь покрываемого пространства равна площади круга
+            if(radiusLenght >= (A.Radius + B.Radius))
+            {
+                B.CoverageOfArea = Math.PI * (B.Radius*B.Radius);
+                return;
+            }
+            else
+            {
+                double F1 = 2 * Math.Acos(
+                    (Math.Pow(A.Radius, 2) - Math.Pow(B.Radius, 2) + Math.Pow(radiusLenght, 2))
+                    /
+                    (2 * A.Radius * radiusLenght)
+                    );
+
+                double F2 = 2 * Math.Acos(
+                    (Math.Pow(B.Radius, 2) - Math.Pow(A.Radius, 2) + Math.Pow(radiusLenght, 2))
+                    /
+                    (2 * B.Radius * radiusLenght)
+                    );
+
+                //Вычисление площадей секторов окружностей
+                double S1 = (Math.Pow(A.Radius, 2) * (F1 - Math.Sin(F1))) / 2;
+                double S2 = (Math.Pow(B.Radius, 2) * (F2 - Math.Sin(F2))) / 2;
+
+                B.CoverageOfArea = S1 + S2;
+            }
+
+        }
+        private static bool AlgorithmOfCheckIntersection(Gene A, Gene B)
+        {
+            int width = SingleSpaceParams.getInstance().Width;
+            int height = SingleSpaceParams.getInstance().Height;
+            /*Длина прямой от центра первого круга до центра второго круга*/
             double radiusLenght=Math.Sqrt(
                 ((A.OX - B.OX)*(A.OX - B.OX))+
                 ((A.OY-B.OY)*(A.OY - B.OY))
                 );
             /*
              * Данное условие провярет на:
-             * -Пересечение двух окружностей
-             * -Размещение окружностей относительно границ плоскости
+             * -Пересечение двух окружностей не более, чем на половину радиуса каждого круга.
              * -Размещение одной окружности внутри другой окружности
+             * -Размещение окружностей относительно границ плоскости
              */
-             //ToDo проверка на размеры плоскости индивидуально по хромосоме
+            //ToDo проверка на размеры плоскости индивидуально по хромосоме
             if (
-                (Convert.ToInt32(radiusLenght) > A.Radius + B.Radius) &&
+                (Convert.ToInt32(radiusLenght) >= ((A.Radius / 2) + (B.Radius / 2))) &&
                 !(Convert.ToInt32(radiusLenght) < A.Radius - B.Radius) &&
-                ((A.OX-A.Radius)>=0 && (A.OX+A.Radius <= width)) &&
-                ((A.OY-A.Radius)>=0 && (A.OY+A.Radius <= height))
+                ((B.OX-A.Radius)>=0 && (B.OX+B.Radius <= width)) &&
+                ((B.OY-B.Radius)>=0 && (B.OY+B.Radius <= height))
                )
             {
                 return false;
             }
             else
             {
+                //Недопустимое размещение
                 return true;
             }
         }
-        /*Корректировка ширины плоскасти*/
-        private static void AdjustmentOfAreA(Chromosome chromosome)
-        {
-            List<int> distanceToWeightBorder = new List<int>();
-            List<int> distanceToHeghtBorder = new List<int>();
-
-            foreach (Gene gene in chromosome.Container)
-            {
-                 distanceToWeightBorder.Add(chromosome.AreaWidth - (gene.OX + gene.Radius));
-                distanceToHeghtBorder.Add(chromosome.AreaHeight-(gene.OY + gene.Radius));
-            }
-
-            chromosome.AreaWidth-=distanceToWeightBorder.Min();
-            chromosome.AreaHeight-=distanceToHeghtBorder.Min();
-        }
-
+        
         /*Оценка фитнесс-функции*/
         public static double EvaluationOfFitenssFunc(Chromosome chromosome)
         {
-            AdjustmentOfAreA(chromosome);
-
             double sumOfGenesArea = 0;
 
             foreach (Gene gene in chromosome.Container)
             {
-                sumOfGenesArea += Math.PI * (gene.Radius * gene.Radius);
+                sumOfGenesArea += gene.CoverageOfArea;
             }
 
-            return (sumOfGenesArea / (chromosome.AreaWidth * chromosome.AreaHeight));
+            return (sumOfGenesArea / (SingleSpaceParams.getInstance().Width*SingleSpaceParams.getInstance().Height));
         }
         /*Кодирование позиции размещения*/
         public static void GA_Encode(Chromosome chromosome)
