@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace DegreeWork.ChromosomeModel
 {
-   public class Gene : IEquatable<Gene>
+   public class Gene
     {
         int _radius;
         int _oX;
@@ -35,13 +35,13 @@ namespace DegreeWork.ChromosomeModel
         public string EncodeValue { get => _encodeValue; set => _encodeValue = value; }
         public double CoverageOfArea { get => coverageOfArea; set => coverageOfArea = value; }
 
-        public bool Equals(Gene other)
+       /* public bool Equals(Gene other)
         {
             if (other == null)
             {
                 return false;
             }
             return (this.EncodeValue.Equals(other.EncodeValue));
-        }
+        }*/
     }
 }

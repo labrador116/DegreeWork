@@ -10,11 +10,13 @@
         Title="MainWindow" Background="WhiteSmoke" HorizontalAlignment="Center" MinWidth="850" MinHeight="600" >
 
     <Page.Resources>
-        <cm:BackgroundWorker x:Key="backgroundWorker" WorkerReportsProgress="True" DoWork="BackgroundWorker_DoWork"></cm:BackgroundWorker>
+        <cm:BackgroundWorker x:Key="backgroundWorker" WorkerReportsProgress="True" DoWork="BackgroundWorker_DoWork" ProgressChanged="BackgroundWorker_ProgressChanged_1" RunWorkerCompleted="BackgroundWorker_RunWorkerCompleted"></cm:BackgroundWorker>
     </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
@@ -31,10 +33,12 @@
         </Border>
         <Label x:Name="pressEnterLabel" Content="Для размещения нажмите клавишу Enter" Grid.Row="1" HorizontalAlignment="Center" FontSize="14" Foreground="#FF5479B9" Visibility="Collapsed" />
         <ProgressBar x:Name="geneticAlgProgressBar" Grid.Row="2" MinWidth="201" MinHeight="20" Foreground="#FF067AB0" Margin="15,0" Visibility="Collapsed" />
+        <Label x:Name="progressTextStateLabel" Grid.Row="3" Content="progressText" HorizontalContentAlignment="Center" FontSize="14" Visibility="Collapsed" />
+        <Button x:Name="saveResult"  Grid.Row="4" HorizontalAlignment="Center" MinWidth="150" MinHeight="20" Background="#FFDAEEF1" Content="Сохранить результат" FontSize="14" Click="saveResult_Click" Visibility="Collapsed" />
         <Grid Grid.Column="1" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
-                <RowDefinition Height="auto"/>
+                <RowDefinition Height="auto"/> 
             </Grid.RowDefinitions>
             <Button x:Name="RoomEnableButton" MinWidth="30" MinHeight="30" Margin="0,60,5,0" Background="White" Content="R" FontSize="18" MaxWidth="30" MaxHeight="30" Click="RoomEnableButton_Click" />
             <Button x:Name="PointEnableButton" Grid.Row="1" MinWidth="30" MinHeight="30" MaxWidth="30" MaxHeight="30" Foreground="#FFF10C0C" Content="P" Background="White" FontSize="18" Margin="0,0,5,0" Click="PointEnableButton_Click" />
@@ -49,7 +53,7 @@
             </Grid.RowDefinitions>
             <StackPanel Grid.Row="0" HorizontalAlignment="Left" Height="auto" VerticalAlignment="Top" Width="auto" Orientation="Horizontal">
                 <Label x:Name="label" Content="Выбор устройств для размещения" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top" FontSize="14"/>
-                <Button x:Name="selectWiFimodelsButton" Width="auto" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5" Click="selectWiFimodelsButton_Click">Добавить</Button>
+                <Button x:Name="selectWiFimodelsButton" Width="auto" Height="30" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="5" Click="selectWiFimodelsButton_Click" Background="#FFDAEEF1">Добавить</Button>
             </StackPanel>
             <TextBlock x:Name="selectedModelsOfModulesLabel" Grid.Row="1" Text="Выбранные устройства:" HorizontalAlignment="Left" Margin="2" VerticalAlignment="Top"/>
             <Label x:Name="label2" Content="Настрйки генетического алгоритма:" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top"/>

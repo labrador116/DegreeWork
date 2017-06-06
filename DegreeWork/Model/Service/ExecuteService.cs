@@ -3,6 +3,7 @@ using DegreeWork.Container;
 using DegreeWork.SpaceParam;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -20,15 +21,17 @@ namespace DegreeWork.Service
         public event EventHandler WrongParams;
         public delegate void SendPopulation (Chromosome chromosome);
         public event SendPopulation callback;
+        BackgroundWorker _BackgroundWorker;
 
-        public ExecuteService (List<int> container)
+        public ExecuteService (List<int> container, BackgroundWorker backgroundWorker)
         {
             _radiusContainer = container;
+            _BackgroundWorker = backgroundWorker;
         }
 
         private static int getRandomValue(int from, int to)
         {
-            Thread.Sleep(100);
+            Thread.Sleep(200);
             return new Random().Next(from, to);
         }
 
@@ -37,17 +40,29 @@ namespace DegreeWork.Service
             gene.OX = getRandomValue(0, SingleSpaceParams.getInstance().Width);
             gene.OY = getRandomValue(0, SingleSpaceParams.getInstance().Height);  
         }
+        public static void RefactorBadGeneForWidthFrom(Gene gene, int from)
+        {
+            gene.OX = getRandomValue(from, SingleSpaceParams.getInstance().Width);
+            gene.OY = getRandomValue(0, SingleSpaceParams.getInstance().Height);
+        }
+        public static void RefactorBadGeneForWidthTo(Gene gene,int to)
+        {
+            gene.OX = getRandomValue(0, to);
+            gene.OY = getRandomValue(0, SingleSpaceParams.getInstance().Height);
+        }
 
-        public void Start()
+        public Chromosome Start()
         {
             _populationContainer = new Population();
             parOps.MaxDegreeOfParallelism = Environment.ProcessorCount;
-            Executing();
+            _BackgroundWorker.ReportProgress(0, "Старт");
+            return Executing();
         }
 
-        public void Executing()
+        public Chromosome Executing()
         {
             /*Создание первой популяции*/
+            _BackgroundWorker.ReportProgress(0, "Создание первой популяции");
             createFirstPopulation();
             
             _result = new List<ResultModel>();
@@ -58,7 +73,8 @@ namespace DegreeWork.Service
                 if (counter == 0)
                 {
                     //Оценивание хромосом
-                   foreach(Chromosome chr in _populationContainer.GetSetPopulationContainer)
+                    _BackgroundWorker.ReportProgress(20, "Оцениваем полученныые решения");
+                    foreach (Chromosome chr in _populationContainer.GetSetPopulationContainer)
                      {
                          ResultModel resM = new ResultModel();
 
@@ -71,33 +87,12 @@ namespace DegreeWork.Service
                 }
                 else
                 {
-                    //Кодирование всех хромосом
-                    //Parallel.ForEach(_populationContainer.GetSetPopulationContainer, parOps, chr =>
-                    foreach(Chromosome chr in _populationContainer.GetSetPopulationContainer)
-                    {
-                        GeneticAlgorithm.GA.GA_Encode(chr);
-                    }
-                   
+                    _BackgroundWorker.ReportProgress(30, "Началась селекция");
                     //Селекция
                     _result.Sort((a, b) => b.Ratio.CompareTo(a.Ratio));
 
                     SingleSpaceParams.getInstance().GlobalResultContainerGetSet.Add(_result.ElementAt(0));
 
-                    //Выход из алгоритма
-                    if (SingleSpaceParams.getInstance().NumOfPopulation != -1)
-                    {
-                        if (counter == SingleSpaceParams.getInstance().NumOfPopulation)
-                        {
-                            break;
-                        }
-                    }
-                    if (SingleSpaceParams.getInstance().CriterionOfQuality != -1)
-                    {
-                        if(_result.ElementAt(0).Ratio >= SingleSpaceParams.getInstance().CriterionOfQuality)
-                        {
-                            break;
-                        }
-                    }
                     if(SingleSpaceParams.getInstance().TheBestResolve != -1)
                     {
                         int countAccessResult= 0;
@@ -116,8 +111,8 @@ namespace DegreeWork.Service
 
                             if (countAccessResult == 5)
                             {
-                                callback(_result.ElementAt(0).Chromosome);
-                                return;
+                                _BackgroundWorker.ReportProgress(100, "Готово");
+                                return _result.ElementAt(0).Chromosome;
                             }
                         }
                     }
@@ -135,51 +130,48 @@ namespace DegreeWork.Service
 
                     //Список хромосом для Кроссинговера
                     List<Chromosome> listForSelection = new List<Chromosome>();
-                    //Parallel.For(0, count, i =>
+                   
                     for(int i =0;i<count;i++)
                      {
                          listForSelection.Add(_result.ElementAt(i).Chromosome);
                      }
-                    
 
+                    _BackgroundWorker.ReportProgress(50, "Началась операция кроссинговера");
                     //Кроссинговер
                     GeneticAlgorithm.GA.CrossingOver(listForSelection);
 
                     _populationContainer = new Population();
 
+                    _BackgroundWorker.ReportProgress(60, "Началась операция мутации");
                     //Мутация и размещение в контейнере 
-                  //  Parallel.ForEach(listForSelection, parOps, chr =>
-                  foreach(Chromosome chr in listForSelection)
+                    foreach (Chromosome chr in listForSelection)
                     {
-                        GeneticAlgorithm.GA.Mutation(chr);
+                       // GeneticAlgorithm.GA.Mutation(chr);
                         _populationContainer.GetSetPopulationContainer.Add(chr);
                     }
 
                     //ToDo мутация
                     _result = new List<ResultModel>();
-                    //Декодирование и оценивание всех хромосом
-                    //Parallel.ForEach(_populationContainer.GetSetPopulationContainer, parOps, chr =>
-                    foreach(Chromosome chr in _populationContainer.GetSetPopulationContainer)
-                     {
-                         GeneticAlgorithm.GA.GA_Decode(chr);
 
+                    _BackgroundWorker.ReportProgress(80, "Оцениваем результаты");
+                    //Оценивание всех хромосом
+                    foreach (Chromosome chr in _populationContainer.GetSetPopulationContainer)
+                     {
                          ResultModel resM = new ResultModel();
                          resM.Ratio = GeneticAlgorithm.GA.EvaluationOfFitenssFunc(chr);
                          resM.Chromosome = chr;
 
                          _result.Add(resM);
                      }
-                    
                 }
                 counter++;
             }
-            callback(_result.ElementAt(0).Chromosome);
         }
 
         private void createFirstPopulation()
         {
             /*Создаем популяцию из 10 хромосом. Каждая гена имеет уникальное размещение. */
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < SingleSpaceParams.getInstance().SumOfChromosomeInPopulation; i++)
             {
                 Chromosome chromosome = new Chromosome();
                 int countOfPosition = 0;
@@ -196,6 +188,7 @@ namespace DegreeWork.Service
                 }
                 GeneticAlgorithm.GA.CheckIntersection(chromosome);
                 _populationContainer.GetSetPopulationContainer.Add(chromosome);
+                _BackgroundWorker.ReportProgress(10, "Создана " + (i+1) + "-я хромосома в первой популяции");
             }
             
             /*Хромосома с допустимыми координатами размещения*/

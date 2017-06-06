@@ -1,4 +1,6 @@
 ﻿using DataBaseStruct;
+using DegreeWork.ChromosomeModel;
+using DegreeWork.Container;
 using DegreeWork.Instances;
 using DegreeWork.Model.Instances;
 using DegreeWork.Service;
@@ -45,6 +47,7 @@ namespace DegreeWork
         int _projectId;
         List<ModelsOfModules> _Models;
         BackgroundWorker _BackgroundWorker;
+        Chromosome _Chromosome;
 
         public MainWindowPage(DB_ConnectionContext context, int projectId)
         {
@@ -316,8 +319,14 @@ namespace DegreeWork
                 }
 
                 geneticAlgProgressBar.Visibility = Visibility.Visible;
+                progressTextStateLabel.Visibility = Visibility.Visible;
 
-                ExecuteService service = new ExecuteService(SingleSpaceParams.getInstance().ModulesRadius);
+                SingleSpaceParams.getInstance().SumOfChromosomeInPopulation = int.Parse(sumOfChromosome.Text);
+                SingleSpaceParams.getInstance().PropabilityOfMutation = double.Parse(probabilityOfMutationTextBox.Text);
+                SingleSpaceParams.getInstance().TheBestResolve = 1;
+                StartAcommButton.IsEnabled = false;
+
+                ExecuteService service = new ExecuteService(SingleSpaceParams.getInstance().ModulesRadius, _BackgroundWorker);
                 _BackgroundWorker.RunWorkerAsync(service);
             }
         }
@@ -510,7 +519,66 @@ namespace DegreeWork
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             ExecuteService service = (ExecuteService)e.Argument;
-            service.Start();
+            e.Result= service.Start();
+        }
+        private void BackgroundWorker_ProgressChanged_1(object sender, ProgressChangedEventArgs e)
+        {
+            geneticAlgProgressBar.Value = e.ProgressPercentage;
+            progressTextStateLabel.Content = e.UserState;
+        }
+
+        private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+             _Chromosome = (Chromosome)e.Result; 
+
+            foreach (Gene gene in _Chromosome.Container)
+            {
+                EllipseGeometry el = new EllipseGeometry
+                {
+                    Center = new Point(gene.OX, gene.OY),
+                    RadiusX = gene.Radius,
+                    RadiusY=gene.Radius
+                };
+                Path path = new Path();
+                path.Data = el;
+                path.StrokeThickness = 2;
+                path.Opacity = 0.5;
+                path.Fill = new SolidColorBrush
+                {
+                    Color = Colors.LightBlue,
+                    Opacity = 0.7
+                };
+                path.Stroke = new SolidColorBrush
+                {
+                    Color = Colors.Red
+                };
+                CanvasAreaForSchemeOfRoom.Children.Add(path);
+            }
+
+            saveResult.Visibility = Visibility.Visible;
+        }
+
+        private void saveResult_Click(object sender, RoutedEventArgs e)
+        {
+            SchemeOfBuilding scheme = _Context.Schemes.Where(c => c.ProjectNumber.ProjectId.Equals(_projectId)).First();
+            List<ModelsOfModules> models = _Context.Models.ToList();
+            
+
+            foreach (Gene gene in _Chromosome.Container)
+            {
+                PlacmentOfModules pm = new PlacmentOfModules();
+
+                pm.ModelId = (from m in models where m.ModelRadius.Equals(gene.Radius.ToString()) select m).First().ModuleId;
+
+                InstallationPosition position = new InstallationPosition();
+                position.Coord_X = gene.OX;
+                position.Coord_Y = gene.OY;
+                position.Placment = new List<PlacmentOfModules>();
+                position.Placment.Add(pm);
+
+                scheme.Positions.Add(position);
+            }
+            _Context.SaveChanges();
         }
     }
 }
