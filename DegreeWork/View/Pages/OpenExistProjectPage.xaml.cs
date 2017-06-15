@@ -55,13 +55,6 @@ namespace DegreeWork
                 ConnectedToDbLabel.Visibility = Visibility.Visible;
                 chooseProjectTextBlock.Opacity = 1;
                 chooseProjectComboBox.Visibility = Visibility.Visible;
-
-                _ProjectsFromDB = _Context.Projects.ToList();
-
-                foreach (Project project in _ProjectsFromDB)
-                {
-                    chooseProjectComboBox.Items.Add(project.ProgectName);
-                }
             }
         }
 
@@ -86,6 +79,18 @@ namespace DegreeWork
             catch
             {
                 MessageBox.Show("Ошибка! Информация не была получена из базы данных!");
+            }
+        }
+        
+        private void chooseProjectComboBox_DropDownOpened(object sender, EventArgs e)
+        {
+            chooseProjectComboBox.Items.Clear();
+            
+            _ProjectsFromDB = _Context.Projects.ToList();
+
+            foreach (Project project in _ProjectsFromDB)
+            {
+                chooseProjectComboBox.Items.Add(project.ProgectName);
             }
         }
     }

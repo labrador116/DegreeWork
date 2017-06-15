@@ -109,7 +109,7 @@ namespace DegreeWork.Service
                                 countAccessResult = 0;
                             }
 
-                            if (countAccessResult == 5)
+                            if (countAccessResult == 5 || result.Ratio == 1)
                             {
                                 _BackgroundWorker.ReportProgress(100, "Готово");
                                 return _result.ElementAt(0).Chromosome;

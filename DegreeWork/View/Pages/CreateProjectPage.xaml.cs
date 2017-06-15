@@ -176,7 +176,7 @@ namespace DegreeWork
                     nav = NavigationService.GetNavigationService(this);
                     
                     MainWindowPage mainWindow = new MainWindowPage(_Context, project.ProjectId);
-                    nav.Navigate(mainWindow);
+                    mainWindow.Show();
                 }
                 catch
                 {

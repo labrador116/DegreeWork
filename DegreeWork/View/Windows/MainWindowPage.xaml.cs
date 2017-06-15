@@ -56,7 +56,9 @@ namespace DegreeWork
             _projectId = projectId;
             _BackgroundWorker = ((BackgroundWorker)this.FindResource("backgroundWorker"));
             InitializeAllObjects();
-
+            SingleSpaceParams.getInstance().SumOfChromosomeInPopulation = 12;
+            SingleSpaceParams.getInstance().PropabilityOfMutation = 0.5;
+            SingleSpaceParams.getInstance().TheBestResolve = 1;
         }
         
         private void MyIP_MouseMove(object sender, MouseEventArgs e)
@@ -249,9 +251,7 @@ namespace DegreeWork
 
         private void StartAcommButton_Click(object sender, RoutedEventArgs e)
         {
-            if (!String.IsNullOrEmpty(probabilityOfMutationTextBox.Text)
-                && !String.IsNullOrEmpty(sumOfChromosome.Text)
-                && SingleSpaceParams.getInstance().ModulesRadius.Count > 0)
+            if (SingleSpaceParams.getInstance().ModulesRadius.Count > 0)
             {
                 try
                 {
@@ -322,9 +322,7 @@ namespace DegreeWork
                 geneticAlgProgressBar.Visibility = Visibility.Visible;
                 progressTextStateLabel.Visibility = Visibility.Visible;
 
-                SingleSpaceParams.getInstance().SumOfChromosomeInPopulation = int.Parse(sumOfChromosome.Text);
-                SingleSpaceParams.getInstance().PropabilityOfMutation = double.Parse(probabilityOfMutationTextBox.Text);
-                SingleSpaceParams.getInstance().TheBestResolve = 1;
+               
                 StartAcommButton.IsEnabled = false;
 
                 ExecuteService service = new ExecuteService(SingleSpaceParams.getInstance().ModulesRadius, _BackgroundWorker);
@@ -364,6 +362,18 @@ namespace DegreeWork
                     isPaint = false;
                     pressEnterLabel.Visibility = Visibility.Collapsed;
                 }
+            }
+
+            if (e.Key == Key.Escape)
+            {
+                if (line != null && line2 != null && line3 != null && line4 != null)
+                {
+                    CanvasAreaForSchemeOfRoom.Children.Remove(line);
+                    CanvasAreaForSchemeOfRoom.Children.Remove(line2);
+                    CanvasAreaForSchemeOfRoom.Children.Remove(line3);
+                    CanvasAreaForSchemeOfRoom.Children.Remove(line4);
+                }
+                isPaint = false;
             }
         }
     
@@ -604,7 +614,6 @@ namespace DegreeWork
             }
         }
 
-
         private void saveMenuItem_Click(object sender, RoutedEventArgs e)
         {
             SchemeOfBuilding scheme = _Context.Schemes.Where(c => c.ProjectNumber.ProjectId.Equals(_projectId)).First();
@@ -703,38 +712,87 @@ namespace DegreeWork
         private void deleteAll_Click(object sender, RoutedEventArgs e)
         {
             CanvasAreaForSchemeOfRoom.Children.Clear();
-            SchemeOfBuilding scheme = _Context.Schemes.Where(c => c.ProjectNumber.ProjectId.Equals(_projectId)).First();
-            List<ControlPoint> points = new List<ControlPoint>(scheme.Point);
-
-            if (points.Count > 0)
+            try
             {
-                foreach (ControlPoint point in points)
-                {
-                    _Context.Points.Remove(point);
-                }
-            }
+                SchemeOfBuilding scheme = _Context.Schemes.Where(c => c.ProjectNumber.ProjectId.Equals(_projectId)).First();
+                List<ControlPoint> points = new List<ControlPoint>(scheme.Point);
 
-            List<Room> rooms = new List<Room>(scheme.Rooms);
-            if (rooms.Count > 0)
+                if (points.Count > 0)
+                {
+                    foreach (ControlPoint point in points)
+                    {
+                        _Context.Points.Remove(point);
+                    }
+                }
+
+                List<Room> rooms = new List<Room>(scheme.Rooms);
+                if (rooms.Count > 0)
+                {
+                    foreach (Room room in rooms)
+                    {
+                        _Context.Rooms.Remove(room);
+                    }
+                }
+
+                List<InstallationPosition> positions = new List<InstallationPosition>(scheme.Positions);
+                if (positions.Count > 0)
+                {
+                    foreach (InstallationPosition position in positions)
+                    {
+                        _Context.InstallationPositions.Remove(position);
+                    }
+                }
+
+                SingleSpaceParams.getInstance().Rooms.Clear();
+                SingleSpaceParams.getInstance().ControlPoints.Clear();
+                _Context.SaveChanges();
+            }
+            catch
             {
-                foreach (Room room in rooms)
-                {
-                    _Context.Rooms.Remove(room);
-                }
+                MessageBox.Show("Ошибка! Данные не были изменены.");
             }
+        }
 
-            List<InstallationPosition> positions = new List<InstallationPosition>(scheme.Positions);
-            if (positions.Count > 0)
+        private void getOut_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void createNewProjectMenuIItem_Click(object sender, RoutedEventArgs e)
+        {
+            this.Content = new CreateProjectPage();
+        }
+
+        private void OpenExistProjectMenuitem_Click(object sender, RoutedEventArgs e)
+        {
+            this.Content = new OpenExistProjectPage();
+        }
+
+        private void deleteCurrentProjectItemView_Click(object sender, RoutedEventArgs e)
+        {
+            try
             {
-                foreach (InstallationPosition position in positions)
-                {
-                    _Context.InstallationPositions.Remove(position);
-                }
-            }
+                Project project = _Context.Projects.Where(s => s.ProjectId.Equals(_projectId)).First();
 
-            SingleSpaceParams.getInstance().Rooms.Clear();
-            SingleSpaceParams.getInstance().ControlPoints.Clear();
-            _Context.SaveChanges();
+                List<SchemeOfBuilding> scheme = project.Scheme;
+
+                if (scheme != null)
+                {
+                    _Context.Schemes.Remove(scheme.ElementAt(0));
+                }
+
+                if (project != null)
+                {
+                    _Context.Projects.Remove(project);
+                }
+
+                _Context.SaveChanges();
+                this.Close();
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка! Данные не были удалены.");
+            }
         }
     }
 }
