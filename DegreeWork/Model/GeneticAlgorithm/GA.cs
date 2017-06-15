@@ -248,10 +248,40 @@ namespace DegreeWork.GeneticAlgorithm
 
         private static bool checkOfCoverageOfRoom(Gene gene, RectangleRoom room)
         {
-                if (gene.OX > room.X1 && gene.OX < room.X2 && gene.OY > room.Y1 && gene.OY < room.Y4)
+            if (room.X1 < room.X2)
+            {
+                if (room.Y1 < room.Y4)
                 {
-                    return true;
+                    if (gene.OX > room.X1 && gene.OX < room.X2 && gene.OY > room.Y1 && gene.OY < room.Y4)
+                    {
+                        return true;
+                    }
                 }
+                else
+                {
+                    if (gene.OX > room.X1 && gene.OX < room.X2 && gene.OY < room.Y1 && gene.OY > room.Y4)
+                    {
+                        return true;
+                    }
+                }
+            }
+            else
+            {
+                if (room.Y1 < room.Y4)
+                {
+                    if (gene.OX < room.X1 && gene.OX > room.X2 && gene.OY > room.Y1 && gene.OY < room.Y4)
+                    {
+                        return true;
+                    }
+                }
+                else
+                {
+                    if (gene.OX < room.X1 && gene.OX > room.X2 && gene.OY < room.Y1 && gene.OY > room.Y4)
+                    {
+                        return true;
+                    }
+                }
+            }
             return false;
         }
 
@@ -288,8 +318,8 @@ namespace DegreeWork.GeneticAlgorithm
         {
             /*Длина прямой от центра первого круга до центра второго круга*/
             double radiusLenght = Math.Sqrt(
-                ((A.OX - B.OX) * (A.OX - B.OX)) +
-                ((A.OY - B.OY) * (A.OY - B.OY))
+                Math.Pow((A.OX - B.OX),2) +
+                Math.Pow((A.OY - B.OY),2)
                 );
 
             //Если пересечения нет, то площадь покрываемого пространства равна площади круга
@@ -325,9 +355,9 @@ namespace DegreeWork.GeneticAlgorithm
             int width = SingleSpaceParams.getInstance().Width;
             int height = SingleSpaceParams.getInstance().Height;
             /*Длина прямой от центра первого круга до центра второго круга*/
-            double radiusLenght=Math.Sqrt(
-                ((A.OX - B.OX)*(A.OX - B.OX))+
-                ((A.OY-B.OY)*(A.OY - B.OY))
+            double radiusLenght = Math.Sqrt(
+                Math.Pow((A.OX - B.OX), 2) +
+                Math.Pow((A.OY - B.OY), 2)
                 );
             /*
              * Данное условие провярет на:

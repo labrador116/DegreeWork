@@ -27,7 +27,7 @@ namespace DegreeWork
             InitializeComponent();
         }
 
-        private void CreateDataBaseButton_PreviewMouseLeftButtonDown(object sender, MouseButtonEventArgs e)
+        private void CreateDataBaseButton_PreviewMouseLeftButtonDown(object sender, RoutedEventArgs e)
         {
             String connectionString = null;
             if (!String.IsNullOrEmpty(DataBaseNameTextBox.Text))

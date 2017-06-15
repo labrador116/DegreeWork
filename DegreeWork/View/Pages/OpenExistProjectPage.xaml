@@ -31,6 +31,6 @@
             </TextBlock.Foreground>
         </TextBlock>
         <ComboBox x:Name="chooseProjectComboBox" Grid.Row="3" Grid.Column="1" MinWidth="200" MinHeight="20" MaxWidth="250" MaxHeight="25" HorizontalAlignment="Right" Margin="10,0,5,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="6,3,3,3"  Visibility="Collapsed" SelectionChanged="chooseProjectComboBox_SelectionChanged" />
-        <Button x:Name="OpenExistProjectButton" MinWidth="250" Grid.Row="4" Grid.Column="2" MinHeight="30" Background="#FFDAEEF1" Content="Открыть проект" FontSize="18" Margin="0,100,10,0" Visibility="Collapsed" Click="OpenExistProjectButton_Click" />
+        <Button x:Name="OpenExistProjectButton" MinWidth="250" Grid.Row="4" Grid.Column="2" MinHeight="40" Background="#FFB5CDD1" Content="Открыть проект" FontSize="24" Margin="0,100,10,0" Click="OpenExistProjectButton_Click" BorderThickness="0" Visibility="Collapsed" />
     </Grid>
 </Page>

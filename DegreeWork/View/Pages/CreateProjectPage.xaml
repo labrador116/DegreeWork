@@ -23,7 +23,7 @@
         </Grid.ColumnDefinitions>
 
         <TextBlock Grid.Row="0" Grid.Column="0" x:Name="ConnectToBdTextBlock" TextWrapping="Wrap" Text="Подключиться к базе данных" VerticalAlignment="Stretch" FontSize="16" Foreground="#FF3567BF" Margin="0,5,100,0" TextDecorations="Underline" PreviewMouseLeftButtonDown="ConnectToBdTextBlock_PreviewMouseLeftButtonDown" HorizontalAlignment="Left" />
-        <Label x:Name="ConnectedToDbLabel" Grid.Row="1" Grid.Column="0" Content="База данных подключена!" Padding="5,0,5,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="#FF53B60E" Visibility="Hidden"  />
+        <Label x:Name="ConnectedToDbLabel" Grid.Row="1" Grid.Column="0" Content="База данных подключена!" Padding="5,0,5,5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Foreground="#FF53B60E" Visibility="Hidden" HorizontalAlignment="Left"  />
         <TextBlock Grid.Row="2" x:Name="createCustomerTextBlock" HorizontalAlignment="Center" TextWrapping="Wrap" Text="Создать заказчика" VerticalAlignment="Stretch" FontSize="24" Grid.Column="1" IsEnabled="False" PreviewMouseLeftButtonDown="createCustomerTextBlock_PreviewMouseLeftButtonDown">
             <TextBlock.Foreground>
                 <SolidColorBrush Color="{StaticResource Color1}"/>
@@ -94,7 +94,7 @@
                 <TextBox x:Name="HeightOfAreaTextBox" Grid.Column="3" MinWidth="50" MaxHeight="25" Visibility="Collapsed" PreviewTextInput="HeightOfAreaTextBox_PreviewTextInput" FontSize="16" />
             </Grid>
 
-            <Button x:Name="SaveDataButton" Grid.Row="6" MinWidth="200" MinHeight="14" Content="Сохранить и продолжить" FontSize="16" Background="#FFDAEEF1" Click="SaveDataButton_Click" Margin="0,50,0,0" HorizontalAlignment="Center" Visibility="Collapsed" />
+            <Button x:Name="SaveDataButton" Grid.Row="6" MinWidth="200" MinHeight="40" Content="Сохранить и продолжить" FontSize="20" Background="#FFB5CDD1" Click="SaveDataButton_Click" Margin="0,50,0,0" HorizontalAlignment="Center" BorderThickness="0" />
 
         </Grid>
     </Grid>

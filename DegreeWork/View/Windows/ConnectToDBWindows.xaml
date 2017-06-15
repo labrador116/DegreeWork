@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DegreeWork"
         mc:Ignorable="d"
-        Title="ConnectToDB" Background="WhiteSmoke" Width="500" Height="170">
+        Title="Подключение к базе данных" Background="WhiteSmoke" Width="500" Height="170">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -14,7 +14,7 @@
         </Grid.RowDefinitions>
         <TextBox x:Name="ContentStringToDBTextBox" Grid.Column="0" Grid.Row="0" MinWidth="100" MaxWidth="600" Tag="" ToolTip="Строка подключения к базе данных" Padding="9,0,0,0" Text="Строка подключения к базе данных" Margin="5,30,5,3" MinHeight="25" FontSize="14" VerticalAlignment="Center" HorizontalContentAlignment="Center" MouseEnter="ContentStringToDBTextBox_MouseEnter" />
         <Label x:Name="ResultConnectToDBLabel" Grid.Row="1" Content="Ошибка подключения к базе данных!" Margin="0" HorizontalContentAlignment="Center" FontSize="14" Padding="5,0" UseLayoutRounding="True" Foreground="#FFF50707" FontWeight="Bold" Visibility="Hidden" />
-        <Button x:Name="ConnectToDBButton" MinWidth="100" MinHeight="9" MaxHeight="27" MaxWidth="300" Content="Подключиться" Padding="3" Background="#FFDAEEF1"  Margin="0,20,5,0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" RenderTransformOrigin="0,0" Click="ConnectToDBButton_Click"/>
+        <Button x:Name="ConnectToDBButton" MinWidth="100" MinHeight="30" MaxHeight="27" MaxWidth="300" Content="Подключиться" Padding="3" Background="#FFB5CDD1"  Margin="0,20,5,0" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Right" RenderTransformOrigin="0,0" Click="ConnectToDBButton_Click" BorderThickness="0" FontSize="16"/>
 
     </Grid>
 </Window>

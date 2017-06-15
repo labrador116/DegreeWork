@@ -28,7 +28,7 @@ namespace DegreeWork
     /// <summary>
     /// Логика взаимодействия для MainWindow.xaml
     /// </summary>
-    public partial class MainWindowPage : Page
+    public partial class MainWindowPage : Window
     {
         private const int SIZE = 1;
         private const int SHIFT = SIZE / 2;
@@ -56,6 +56,7 @@ namespace DegreeWork
             _projectId = projectId;
             _BackgroundWorker = ((BackgroundWorker)this.FindResource("backgroundWorker"));
             InitializeAllObjects();
+
         }
         
         private void MyIP_MouseMove(object sender, MouseEventArgs e)
@@ -391,7 +392,15 @@ namespace DegreeWork
 
         private void InitializeAllObjects()
         {
-            SchemeOfBuilding scheme = _Context.Schemes.Where(c => c.ProjectNumber.ProjectId.Equals(_projectId)).First();
+            SchemeOfBuilding scheme=null;
+            try
+            {
+                 scheme = _Context.Schemes.Where(c => c.ProjectNumber.ProjectId.Equals(_projectId)).First();
+            }
+            catch
+            {
+                MessageBox.Show("Ошибка загрузки данных из базы данных");
+            }
             List<Room> rooms = null;
             if (scheme.Rooms != null)
             {
@@ -513,6 +522,45 @@ namespace DegreeWork
                     }
                 }
             }
+            
+            if (scheme.Positions != null)
+            {
+                try
+                {
+                    List<InstallationPosition> positions = scheme.Positions;
+
+                    foreach (InstallationPosition pos in positions)
+                    {
+                        PlacmentOfModules placement = pos.Placment.First();
+                        ModelsOfModules model = _Context.Models.Where(mod => mod.ModuleId == placement.ModelId).First();
+
+                        EllipseGeometry el = new EllipseGeometry
+                        {
+                            Center = new Point(pos.Coord_X, pos.Coord_Y),
+                            RadiusX = double.Parse(model.ModelRadius),
+                            RadiusY = double.Parse(model.ModelRadius)
+                        };
+                        Path path = new Path();
+                        path.Data = el;
+                        path.StrokeThickness = 2;
+                        path.Opacity = 0.5;
+                        path.Fill = new SolidColorBrush
+                        {
+                            Color = Colors.LightBlue,
+                            Opacity = 0.7
+                        };
+                        path.Stroke = new SolidColorBrush
+                        {
+                            Color = Colors.Red
+                        };
+                        CanvasAreaForSchemeOfRoom.Children.Add(path);
+                    }
+                }
+                catch
+                {
+                    MessageBox.Show("Ошибка загрузки данных из базы данных");
+                }
+            }
             _Models = _Context.Models.ToList();
         }
 
@@ -554,30 +602,138 @@ namespace DegreeWork
                 };
                 CanvasAreaForSchemeOfRoom.Children.Add(path);
             }
-
-            saveResult.Visibility = Visibility.Visible;
         }
 
-        private void saveResult_Click(object sender, RoutedEventArgs e)
+
+        private void saveMenuItem_Click(object sender, RoutedEventArgs e)
         {
             SchemeOfBuilding scheme = _Context.Schemes.Where(c => c.ProjectNumber.ProjectId.Equals(_projectId)).First();
             List<ModelsOfModules> models = _Context.Models.ToList();
-            
 
-            foreach (Gene gene in _Chromosome.Container)
+            try
             {
-                PlacmentOfModules pm = new PlacmentOfModules();
+                if (SingleSpaceParams.getInstance().ControlPoints.Count > 0)
+                        {
+                            foreach (ControlPointInst cp in SingleSpaceParams.getInstance().ControlPoints)
+                            {
+                                ControlPoint point = new ControlPoint();
+                                point.Coord_X = cp.X1;
+                                point.Coord_Y = cp.Y1;
 
-                pm.ModelId = (from m in models where m.ModelRadius.Equals(gene.Radius.ToString()) select m).First().ModuleId;
+                                bool isExist = false;
 
-                InstallationPosition position = new InstallationPosition();
-                position.Coord_X = gene.OX;
-                position.Coord_Y = gene.OY;
-                position.Placment = new List<PlacmentOfModules>();
-                position.Placment.Add(pm);
+                                foreach (ControlPoint c in scheme.Point)
+                                {
+                                    if (c.Coord_X == point.Coord_X && c.Coord_Y == point.Coord_Y)
+                                    {
+                                        isExist = true;
+                                    }
+                                }
 
-                scheme.Positions.Add(position);
+                                if (!isExist)
+                                {
+                                    scheme.Point.Add(point);
+                                }
+                            }
+                        }
+
+                        if (SingleSpaceParams.getInstance().Rooms.Count > 0)
+                        {
+                            foreach (RectangleRoom rm in SingleSpaceParams.getInstance().Rooms)
+                            {
+                                Room room = new Room();
+                                room.Coord_X1 = rm.X1;
+                                room.Coord_Y1 = rm.Y1;
+
+                                room.Coord_X2 = rm.X2;
+                                room.Coord_Y2 = rm.Y2;
+
+                                room.Coord_X3 = rm.X3;
+                                room.Coord_Y3 = rm.Y3;
+
+                                room.Coord_X4 = rm.X4;
+                                room.Coord_Y4 = rm.Y4;
+
+                                bool isExist = false;
+
+                                foreach (Room r in scheme.Rooms)
+                                {
+                                    if (r.Coord_X1 == room.Coord_X1
+                                        && r.Coord_Y1 == room.Coord_Y1
+                                        && r.Coord_X4 == room.Coord_X4
+                                        && r.Coord_Y4 == room.Coord_Y4)
+                                    {
+                                        isExist = true;
+                                    }
+                                }
+
+                                if (!isExist)
+                                {
+                                    scheme.Rooms.Add(room);
+                                }
+                            }
+                        }
+                        
+                if (_Chromosome != null)
+                {
+                    foreach (Gene gene in _Chromosome.Container)
+                    {
+                        PlacmentOfModules pm = new PlacmentOfModules();
+
+                        pm.ModelId = (from m in models where m.ModelRadius.Equals(gene.Radius.ToString()) select m).First().ModuleId;
+
+                        InstallationPosition position = new InstallationPosition();
+                        position.Coord_X = gene.OX;
+                        position.Coord_Y = gene.OY;
+                        position.Placment = new List<PlacmentOfModules>();
+                        position.Placment.Add(pm);
+
+                        scheme.Positions.Add(position);
+                    }
+                }
+                _Context.SaveChanges();
             }
+            catch
+            {
+                MessageBox.Show("Ошибка! Данные не были сохранены в базу данных.");
+            }
+            MessageBox.Show("Результат сохранен.");
+        }
+
+        private void deleteAll_Click(object sender, RoutedEventArgs e)
+        {
+            CanvasAreaForSchemeOfRoom.Children.Clear();
+            SchemeOfBuilding scheme = _Context.Schemes.Where(c => c.ProjectNumber.ProjectId.Equals(_projectId)).First();
+            List<ControlPoint> points = new List<ControlPoint>(scheme.Point);
+
+            if (points.Count > 0)
+            {
+                foreach (ControlPoint point in points)
+                {
+                    _Context.Points.Remove(point);
+                }
+            }
+
+            List<Room> rooms = new List<Room>(scheme.Rooms);
+            if (rooms.Count > 0)
+            {
+                foreach (Room room in rooms)
+                {
+                    _Context.Rooms.Remove(room);
+                }
+            }
+
+            List<InstallationPosition> positions = new List<InstallationPosition>(scheme.Positions);
+            if (positions.Count > 0)
+            {
+                foreach (InstallationPosition position in positions)
+                {
+                    _Context.InstallationPositions.Remove(position);
+                }
+            }
+
+            SingleSpaceParams.getInstance().Rooms.Clear();
+            SingleSpaceParams.getInstance().ControlPoints.Clear();
             _Context.SaveChanges();
         }
     }

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\
+C:\Users\magaz\Documents\Visual Studio 2017\Projects\DegreeWork\DegreeWork\obj\Debug\
 DegreeWork
 none
 false
 DEBUG;TRACE
-C:\Users\magaz\documents\visual studio 2017\Projects\DegreeWork\DegreeWork\App.xaml
-8-1296183248
+C:\Users\magaz\Documents\Visual Studio 2017\Projects\DegreeWork\DegreeWork\App.xaml
+81750383905
 
-22-56648606
-17-1872772706
-View\Pages\CreateDataBasePage.xaml;View\Pages\FirstPage.xaml;View\Pages\MainWindowPage.xaml;View\Pages\CreateProjectPage.xaml;View\Pages\OpenExistProjectPage.xaml;View\Windows\ChooseModelOfModule.xaml;View\Windows\ConnectToDBWindows.xaml;View\Windows\CreateCustomerWindows.xaml;
+22-824569251
+17692388050
+View\Pages\CreateDataBasePage.xaml;View\Pages\FirstPage.xaml;View\Windows\MainWindowPage.xaml;View\Pages\CreateProjectPage.xaml;View\Pages\OpenExistProjectPage.xaml;View\Windows\ChooseModelOfModule.xaml;View\Windows\ConnectToDBWindows.xaml;View\Windows\CreateCustomerWindows.xaml;
 
 False
 
