@@ -65,7 +65,7 @@
             <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
         <Border Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="auto" Height="auto" BorderBrush="Black" BorderThickness="1" Margin="15" >
-                <Canvas x:Name="CanvasAreaForSchemeOfRoom" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="100" MinWidth="100" Width="500" Height="400" Opacity="1" Background="AliceBlue"                   
+                <Canvas x:Name="CanvasAreaForSchemeOfRoom" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="500" Height="400" Opacity="1" Background="AliceBlue"                   
                     MouseLeftButtonDown="MyIP_MouseLeftButtonDown" 
                     MouseMove="MyIP_MouseMove" MouseLeftButtonUp="Window_MouseLeftButtonUp" Initialized="CanvasAreaForSchemeOfRoom_Initialized" UIElement.KeyUp="CanvasAreaForSchemeOfRoom_KeyUp"/>
         </Border>

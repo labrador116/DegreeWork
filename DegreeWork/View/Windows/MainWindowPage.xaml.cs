@@ -57,10 +57,16 @@ namespace DegreeWork
             _projectId = projectId;
             _BackgroundWorker = ((BackgroundWorker)this.FindResource("backgroundWorker"));
             InitializeAllObjects();
-            SingleSpaceParams.getInstance().SumOfChromosomeInPopulation = 12;
-            SingleSpaceParams.getInstance().PropabilityOfMutation = 0.5;
-            SingleSpaceParams.getInstance().TheBestResolve = 1;
+            if (SingleSpaceParams.getInstance().SumOfChromosomeInPopulation == 0)
+            {
+                SingleSpaceParams.getInstance().SumOfChromosomeInPopulation = 8;
+            }
+            if (SingleSpaceParams.getInstance().PropabilityOfMutation == 0)
+            {
+                SingleSpaceParams.getInstance().PropabilityOfMutation = 0.5;
+            }
 
+            SingleSpaceParams.getInstance().TheBestResolve = 1;
             SingleSpaceParams.getInstance().ModulesRadius.Clear();
         }
         
@@ -627,7 +633,7 @@ namespace DegreeWork
             }
 
             percentResultTexBox.Visibility = Visibility.Visible;
-            percentResultTexBox.Text = "Результат покрытия: " + (resultSum * 100) + "%";
+            percentResultTexBox.Text = "Результат покрытия: " + resultSum ;
         }
 
         private void saveMenuItem_Click(object sender, RoutedEventArgs e)
