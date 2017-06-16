@@ -48,6 +48,7 @@ namespace DegreeWork
         List<ModelsOfModules> _Models;
         BackgroundWorker _BackgroundWorker;
         Chromosome _Chromosome;
+        Point _Point;
 
         public MainWindowPage(DB_ConnectionContext context, int projectId)
         {
@@ -59,6 +60,8 @@ namespace DegreeWork
             SingleSpaceParams.getInstance().SumOfChromosomeInPopulation = 12;
             SingleSpaceParams.getInstance().PropabilityOfMutation = 0.5;
             SingleSpaceParams.getInstance().TheBestResolve = 1;
+
+            SingleSpaceParams.getInstance().ModulesRadius.Clear();
         }
         
         private void MyIP_MouseMove(object sender, MouseEventArgs e)
@@ -74,15 +77,15 @@ namespace DegreeWork
                     CanvasAreaForSchemeOfRoom.Children.Remove(line3);
                     CanvasAreaForSchemeOfRoom.Children.Remove(line4);
                 }
-
-                var point = Mouse.GetPosition(CanvasAreaForSchemeOfRoom);
+                
+                _Point = Mouse.GetPosition(CanvasAreaForSchemeOfRoom);
                 line = new Line
                 {
                     Stroke = color,
                     StrokeThickness = SIZE,
                     X1 = prev.X,
                     Y1 = prev.Y,
-                    X2 = point.X,
+                    X2 = _Point.X,
                     Y2 = prev.Y,
                     StrokeStartLineCap = PenLineCap.Round,
                     StrokeEndLineCap = PenLineCap.Round
@@ -95,7 +98,7 @@ namespace DegreeWork
                     X1 = prev.X,
                     Y1 = prev.Y,
                     X2 = prev.X,
-                    Y2 = point.Y,
+                    Y2 = _Point.Y,
                     StrokeStartLineCap = PenLineCap.Round,
                     StrokeEndLineCap = PenLineCap.Round
                 };
@@ -105,9 +108,9 @@ namespace DegreeWork
                     Stroke = color,
                     StrokeThickness = SIZE,
                     X1 = prev.X,
-                    Y1 = point.Y,
-                    X2 = point.X,
-                    Y2 = point.Y,
+                    Y1 = _Point.Y,
+                    X2 = _Point.X,
+                    Y2 = _Point.Y,
                     StrokeStartLineCap = PenLineCap.Round,
                     StrokeEndLineCap = PenLineCap.Round
                 };
@@ -116,10 +119,10 @@ namespace DegreeWork
                 {
                     Stroke = color,
                     StrokeThickness = SIZE,
-                    X1 = point.X,
+                    X1 = _Point.X,
                     Y1 = prev.Y,
-                    X2 = point.X,
-                    Y2 = point.Y,
+                    X2 = _Point.X,
+                    Y2 = _Point.Y,
                     StrokeStartLineCap = PenLineCap.Round,
                     StrokeEndLineCap = PenLineCap.Round
                 };
@@ -136,6 +139,12 @@ namespace DegreeWork
             if (_IsRoom)
             {
                 if (isPaint) { return; }
+
+                widthRoomTextBlock.Visibility = Visibility.Visible;
+                widthRoomTextBox.Visibility = Visibility.Visible;
+                lengthRoomTextBlock.Visibility = Visibility.Visible;
+                lengthRoomTextBox.Visibility = Visibility.Visible;
+                setLengthAndWidthButton.Visibility = Visibility.Visible;
 
                 pressEnterLabel.Visibility = Visibility.Visible;
                 CanvasAreaForSchemeOfRoom.Focusable = true;
@@ -332,10 +341,11 @@ namespace DegreeWork
 
         private void CanvasAreaForSchemeOfRoom_KeyUp(object sender, KeyEventArgs e)
         {
-            if (e.Key == Key.Enter)
+            if (_IsRoom)
             {
-                if (_IsRoom)
+                if (e.Key == Key.Enter)
                 {
+
                     if (line != null && line2 != null)
                     {
                         RectangleRoom room = new RectangleRoom
@@ -361,19 +371,20 @@ namespace DegreeWork
                     line4 = null;
                     isPaint = false;
                     pressEnterLabel.Visibility = Visibility.Collapsed;
-                }
-            }
 
-            if (e.Key == Key.Escape)
-            {
-                if (line != null && line2 != null && line3 != null && line4 != null)
-                {
-                    CanvasAreaForSchemeOfRoom.Children.Remove(line);
-                    CanvasAreaForSchemeOfRoom.Children.Remove(line2);
-                    CanvasAreaForSchemeOfRoom.Children.Remove(line3);
-                    CanvasAreaForSchemeOfRoom.Children.Remove(line4);
                 }
-                isPaint = false;
+
+                if (e.Key == Key.Escape)
+                {
+                    if (line != null && line2 != null && line3 != null && line4 != null)
+                    {
+                        CanvasAreaForSchemeOfRoom.Children.Remove(line);
+                        CanvasAreaForSchemeOfRoom.Children.Remove(line2);
+                        CanvasAreaForSchemeOfRoom.Children.Remove(line3);
+                        CanvasAreaForSchemeOfRoom.Children.Remove(line4);
+                    }
+                    isPaint = false;
+                }
             }
         }
     
@@ -792,6 +803,158 @@ namespace DegreeWork
             catch
             {
                 MessageBox.Show("Ошибка! Данные не были удалены.");
+            }
+        }
+
+        private void setSumOfChromosomesMenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            new SettingSumOfPopulation().ShowDialog();
+        }
+
+        private void MenuItem_Click(object sender, RoutedEventArgs e)
+        {
+            new SettingProbabilityOfMutation().ShowDialog();
+        }
+
+        private void FuncByPopulationRelationship_Click(object sender, RoutedEventArgs e)
+        {
+            if (SingleSpaceParams.getInstance().RatingByOrder.Count > 0)
+            {
+                new ResultCharts(SingleSpaceParams.getInstance().RatingByOrder).Show();
+            }
+        }
+
+        private void MenuItem_Click_1(object sender, RoutedEventArgs e)
+        {
+            
+        }
+
+        private void setLengthAndWidthButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (!String.IsNullOrEmpty(widthRoomTextBox.Text) && !String.IsNullOrEmpty(lengthRoomTextBox.Text))
+            {
+                _Point.X = prev.X + double.Parse(widthRoomTextBox.Text);
+                _Point.Y = prev.Y + double.Parse(lengthRoomTextBox.Text);
+
+                if (line != null && line2 != null && line3 != null && line4 != null)
+                {
+                    CanvasAreaForSchemeOfRoom.Children.Remove(line);
+                    CanvasAreaForSchemeOfRoom.Children.Remove(line2);
+                    CanvasAreaForSchemeOfRoom.Children.Remove(line3);
+                    CanvasAreaForSchemeOfRoom.Children.Remove(line4);
+                }
+
+                line = new Line
+                {
+                    Stroke = color,
+                    StrokeThickness = SIZE,
+                    X1 = prev.X,
+                    Y1 = prev.Y,
+                    X2 = _Point.X,
+                    Y2 = prev.Y,
+                    StrokeStartLineCap = PenLineCap.Round,
+                    StrokeEndLineCap = PenLineCap.Round
+                };
+
+                line2 = new Line
+                {
+                    Stroke = color,
+                    StrokeThickness = SIZE,
+                    X1 = prev.X,
+                    Y1 = prev.Y,
+                    X2 = prev.X,
+                    Y2 = _Point.Y,
+                    StrokeStartLineCap = PenLineCap.Round,
+                    StrokeEndLineCap = PenLineCap.Round
+                };
+
+                line3 = new Line
+                {
+                    Stroke = color,
+                    StrokeThickness = SIZE,
+                    X1 = prev.X,
+                    Y1 = _Point.Y,
+                    X2 = _Point.X,
+                    Y2 = _Point.Y,
+                    StrokeStartLineCap = PenLineCap.Round,
+                    StrokeEndLineCap = PenLineCap.Round
+                };
+
+                line4 = new Line
+                {
+                    Stroke = color,
+                    StrokeThickness = SIZE,
+                    X1 = _Point.X,
+                    Y1 = prev.Y,
+                    X2 = _Point.X,
+                    Y2 = _Point.Y,
+                    StrokeStartLineCap = PenLineCap.Round,
+                    StrokeEndLineCap = PenLineCap.Round
+                };
+
+                CanvasAreaForSchemeOfRoom.Children.Add(line);
+                CanvasAreaForSchemeOfRoom.Children.Add(line2);
+                CanvasAreaForSchemeOfRoom.Children.Add(line3);
+                CanvasAreaForSchemeOfRoom.Children.Add(line4);
+            }
+        }
+
+        private void widthRoomTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!Char.IsDigit(e.Text, 0) && e.Text != ",") e.Handled = true;
+        }
+
+        private void lengthRoomTextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!Char.IsDigit(e.Text, 0) && e.Text != ",") e.Handled = true;
+        }
+
+        private void win_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (_IsRoom)
+            {
+                if (e.Key == Key.Enter)
+                {
+
+                    if (line != null && line2 != null)
+                    {
+                        RectangleRoom room = new RectangleRoom
+                        {
+                            X1 = Convert.ToInt32(line.X1),
+                            Y1 = Convert.ToInt32(line.Y1),
+
+                            X2 = Convert.ToInt32(line.X2),
+                            Y2 = Convert.ToInt32(line.Y2),
+
+                            X3 = Convert.ToInt32(line2.X2),
+                            Y3 = Convert.ToInt32(line2.Y2),
+
+                            X4 = Convert.ToInt32(line4.X2),
+                            Y4 = Convert.ToInt32(line4.Y2)
+                        };
+                        SingleSpaceParams.getInstance().Rooms.Add(room);
+                    }
+
+                    line = null;
+                    line2 = null;
+                    line3 = null;
+                    line4 = null;
+                    isPaint = false;
+                    pressEnterLabel.Visibility = Visibility.Collapsed;
+
+                }
+
+                if (e.Key == Key.Escape)
+                {
+                    if (line != null && line2 != null && line3 != null && line4 != null)
+                    {
+                        CanvasAreaForSchemeOfRoom.Children.Remove(line);
+                        CanvasAreaForSchemeOfRoom.Children.Remove(line2);
+                        CanvasAreaForSchemeOfRoom.Children.Remove(line3);
+                        CanvasAreaForSchemeOfRoom.Children.Remove(line4);
+                    }
+                    isPaint = false;
+                }
             }
         }
     }

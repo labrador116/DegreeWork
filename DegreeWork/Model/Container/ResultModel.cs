@@ -14,7 +14,6 @@ namespace DegreeWork.Container
 
         public double Ratio { get => _ratio; set => _ratio = value; }
         public Chromosome Chromosome { get => _chromosome; set => _chromosome = value; }
-    
-        
+         
     }
 }

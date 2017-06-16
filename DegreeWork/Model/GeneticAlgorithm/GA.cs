@@ -37,7 +37,7 @@ namespace DegreeWork.GeneticAlgorithm
                 //Проврека на покрытие сигналом контрольных точек, если все точки уже покрыты, тогда проерка не проводится
                 if (countOfPoint != 0)
                 {
-                    if (checkOfCoverageOfControlPoint(chromosome.Container.ElementAt(i), points))
+                    if (checkOfCoverageOfControlPoint(chromosome.Container.ElementAt(i), points.ElementAt(i)))
                     {
                         countOfPoint--;
                     }
@@ -90,7 +90,15 @@ namespace DegreeWork.GeneticAlgorithm
                             if (i == 0)
                             {
                                 Gene gene = chromosome.Container.ElementAt(i);
-                                chromosome.Container.ElementAt(i).CoverageOfArea = Math.PI * (gene.Radius * gene.Radius);
+                                bool resultIntersection = checkIntersectionWithArea(gene);
+                                if (resultIntersection == true)
+                                {
+                                    chromosome.Container.ElementAt(i).CoverageOfArea = (Math.PI * (gene.Radius * gene.Radius)) / 2;
+                                }
+                                else
+                                {
+                                    chromosome.Container.ElementAt(i).CoverageOfArea = Math.PI * (gene.Radius * gene.Radius);
+                                }
                             }
                             else
                             {
@@ -213,7 +221,15 @@ namespace DegreeWork.GeneticAlgorithm
                             if (i == 0)
                             {
                                 Gene gene = chromosome.Container.ElementAt(i);
-                                chromosome.Container.ElementAt(i).CoverageOfArea = Math.PI * (gene.Radius * gene.Radius);
+                                bool resultIntersection = checkIntersectionWithArea(gene);
+                                if (resultIntersection == true)
+                                {
+                                    chromosome.Container.ElementAt(i).CoverageOfArea = (Math.PI * (gene.Radius * gene.Radius))/2;
+                                }
+                                else
+                                {
+                                    chromosome.Container.ElementAt(i).CoverageOfArea = Math.PI * (gene.Radius * gene.Radius);
+                                }
                             }
                             else
                             {
@@ -325,7 +341,15 @@ namespace DegreeWork.GeneticAlgorithm
             //Если пересечения нет, то площадь покрываемого пространства равна площади круга
             if(radiusLenght >= (A.Radius + B.Radius))
             {
-                B.CoverageOfArea = Math.PI * (B.Radius*B.Radius);
+                bool resultIntersection = checkIntersectionWithArea(B);
+                if (resultIntersection == true)
+                {
+                    B.CoverageOfArea = (Math.PI * (B.Radius * B.Radius)) / 2;
+                }
+                else
+                {
+                    B.CoverageOfArea = Math.PI * (B.Radius * B.Radius);
+                }
                 return;
             }
             else
@@ -346,7 +370,16 @@ namespace DegreeWork.GeneticAlgorithm
                 double S1 = (Math.Pow(A.Radius, 2) * (F1 - Math.Sin(F1))) / 2;
                 double S2 = (Math.Pow(B.Radius, 2) * (F2 - Math.Sin(F2))) / 2;
 
-                B.CoverageOfArea = (Math.PI * Math.Pow(B.Radius,2))- (S1 + S2);
+                bool resultIntersection = checkIntersectionWithArea(B);
+                if (resultIntersection == true)
+                {
+                    B.CoverageOfArea = ((Math.PI * Math.Pow(B.Radius, 2)) - (S1 + S2))/2;
+                }
+                else
+                {
+                    B.CoverageOfArea = (Math.PI * Math.Pow(B.Radius, 2)) - (S1 + S2);
+                }
+                
             }
 
         }
@@ -369,8 +402,8 @@ namespace DegreeWork.GeneticAlgorithm
             if (
                 (Convert.ToInt32(radiusLenght) >= ((A.Radius / 2) + (B.Radius / 2))) &&
                 !(Convert.ToInt32(radiusLenght) < A.Radius - B.Radius) &&
-                ((B.OX-A.Radius)>=0 && (B.OX+B.Radius <= width)) &&
-                ((B.OY-B.Radius)>=0 && (B.OY+B.Radius <= height))
+                ((B.OX-B.Radius)>=(0-B.Radius) && (B.OX+B.Radius <= (width+B.Radius))) &&
+                ((B.OY-B.Radius)>= (0 - B.Radius) && (B.OY+B.Radius <= (height+B.Radius)))
                )
             {
                 return false;
@@ -378,6 +411,22 @@ namespace DegreeWork.GeneticAlgorithm
             else
             {
                 //Недопустимое размещение
+                return true;
+            }
+        }
+
+        private static bool checkIntersectionWithArea(Gene gene)
+        {
+            int width = SingleSpaceParams.getInstance().Width;
+            int height = SingleSpaceParams.getInstance().Height;
+
+            if (((gene.OX - gene.Radius) >= 0  && (gene.OX + gene.Radius <= width )) &&
+                ((gene.OY - gene.Radius) >= 0  && (gene.OY + gene.Radius <= height )))
+            {
+                return false;
+            }
+            else
+            {
                 return true;
             }
         }

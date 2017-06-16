@@ -58,6 +58,12 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="OxyPlot, Version=1.0.0.0, Culture=neutral, PublicKeyToken=638079a8f0bd61e9, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Core.1.0.0\lib\net45\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf, Version=1.0.0.0, Culture=neutral, PublicKeyToken=75e952ba404cdbb0, processorArchitecture=MSIL">
+      <HintPath>..\packages\OxyPlot.Wpf.1.0.0\lib\net45\OxyPlot.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Data" />
@@ -95,6 +101,9 @@
     <Compile Include="View\Pages\OpenExistProjectPage.xaml.cs">
       <DependentUpon>OpenExistProjectPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\AboutProgramm.xaml.cs">
+      <DependentUpon>AboutProgramm.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Windows\ChooseModelOfModule.xaml.cs">
       <DependentUpon>ChooseModelOfModule.xaml</DependentUpon>
     </Compile>
@@ -104,11 +113,24 @@
     <Compile Include="View\Windows\CreateCustomerWindows.xaml.cs">
       <DependentUpon>CreateCustomerWindows.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Windows\ResultCharts.xaml.cs">
+      <DependentUpon>ResultCharts.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\SettingProbabilityOfMutation.xaml.cs">
+      <DependentUpon>SettingProbabilityOfMutation.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Windows\SettingSumOfPopulation.xaml.cs">
+      <DependentUpon>SettingSumOfPopulation.xaml</DependentUpon>
+    </Compile>
     <Page Include="View\Pages\CreateDataBasePage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Pages\FirstPage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\AboutProgramm.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -147,6 +169,18 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Windows\CreateCustomerWindows.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\ResultCharts.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\SettingProbabilityOfMutation.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Windows\SettingSumOfPopulation.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

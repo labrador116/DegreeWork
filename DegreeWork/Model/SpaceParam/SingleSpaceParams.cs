@@ -26,6 +26,7 @@ namespace DegreeWork.SpaceParam
         private List<ControlPointInst> _controlPoints = new List<ControlPointInst>();
         private List<ModelsOfModules> _models = new List<ModelsOfModules>();
         private List<int> _modulesRadius = new List<int>();
+        private List<double> _ratingByOrder = new List<double>();
 
         private SingleSpaceParams(int width, int height)
         {
@@ -48,6 +49,7 @@ namespace DegreeWork.SpaceParam
         public List<ControlPointInst> ControlPoints { get => _controlPoints; set => _controlPoints = value; }
         public List<ModelsOfModules> Models { get => _models; set => _models = value; }
         public List<int> ModulesRadius { get => _modulesRadius; set => _modulesRadius = value; }
+        public List<double> RatingByOrder { get => _ratingByOrder; set => _ratingByOrder = value; }
 
         public static SingleSpaceParams getInstance()
         {

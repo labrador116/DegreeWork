@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\magaz\Documents\Visual Studio 2017\Projects\DegreeWork\DegreeWork\App.xaml
-81750383905
+121588265025
 
-22-824569251
-17692388050
-View\Pages\CreateDataBasePage.xaml;View\Pages\FirstPage.xaml;View\Windows\MainWindowPage.xaml;View\Pages\CreateProjectPage.xaml;View\Pages\OpenExistProjectPage.xaml;View\Windows\ChooseModelOfModule.xaml;View\Windows\ConnectToDBWindows.xaml;View\Windows\CreateCustomerWindows.xaml;
+262011767578
+72-1145982371
+View\Pages\CreateDataBasePage.xaml;View\Pages\FirstPage.xaml;View\Windows\AboutProgramm.xaml;View\Windows\MainWindowPage.xaml;View\Pages\CreateProjectPage.xaml;View\Pages\OpenExistProjectPage.xaml;View\Windows\ChooseModelOfModule.xaml;View\Windows\ConnectToDBWindows.xaml;View\Windows\CreateCustomerWindows.xaml;View\Windows\ResultCharts.xaml;View\Windows\SettingProbabilityOfMutation.xaml;View\Windows\SettingSumOfPopulation.xaml;
 
 False
 

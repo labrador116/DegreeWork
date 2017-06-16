@@ -80,7 +80,6 @@ namespace DegreeWork.Service
 
                          resM.Ratio = GeneticAlgorithm.GA.EvaluationOfFitenssFunc(chr);
                          resM.Chromosome = chr;
-                         
                          _result.Add(resM);
                      }
                     SingleSpaceParams.getInstance().GlobalResultContainerGetSet.Add(_result.ElementAt(0));
@@ -92,8 +91,9 @@ namespace DegreeWork.Service
                     _result.Sort((a, b) => b.Ratio.CompareTo(a.Ratio));
 
                     SingleSpaceParams.getInstance().GlobalResultContainerGetSet.Add(_result.ElementAt(0));
+                    SingleSpaceParams.getInstance().RatingByOrder.Add(_result.ElementAt(0).Ratio);
 
-                    if(SingleSpaceParams.getInstance().TheBestResolve != -1)
+                    if (SingleSpaceParams.getInstance().TheBestResolve != -1)
                     {
                         int countAccessResult= 0;
                         for (int i = 1; i < SingleSpaceParams.getInstance().GlobalResultContainerGetSet.Count; i++)

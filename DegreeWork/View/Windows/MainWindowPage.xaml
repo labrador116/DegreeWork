@@ -7,13 +7,14 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:cm="clr-namespace:System.ComponentModel;assembly=System"
         mc:Ignorable="d"
-        Title="Главное окно" d:DesignWidth="900" Background="WhiteSmoke" SizeToContent="WidthAndHeight" MinHeight="400"  HorizontalContentAlignment="Stretch" >
+        Title="Главное окно" d:DesignWidth="900" Background="WhiteSmoke" SizeToContent="WidthAndHeight" MinHeight="400"  HorizontalContentAlignment="Stretch" KeyUp="win_KeyUp" >
 
     <Window.Resources>
         <cm:BackgroundWorker x:Key="backgroundWorker" WorkerReportsProgress="True" DoWork="BackgroundWorker_DoWork" ProgressChanged="BackgroundWorker_ProgressChanged_1" RunWorkerCompleted="BackgroundWorker_RunWorkerCompleted"></cm:BackgroundWorker>
     </Window.Resources>
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
@@ -28,19 +29,28 @@
             </MenuItem>
 
             <MenuItem Header="Настройка ген. алгоритма">
-
+                <MenuItem x:Name="setSumOfChromosomesMenuItem" Header="Задать количество хромосом" Click="setSumOfChromosomesMenuItem_Click"/>
+                <MenuItem Header="Задать вероятность мутации" Click="MenuItem_Click"/>
             </MenuItem>
 
-            <MenuItem Header="Графики">
-
+            <MenuItem x:Name="resultGraphicsMenuItem" Header="Графики">
+                <MenuItem x:Name="FuncByPopulationRelationship" Header="Отношение ЦФ к популяции" Click="FuncByPopulationRelationship_Click"/>
             </MenuItem>
 
-            <MenuItem Header="O программе">
+            <MenuItem Header="O программе" Click="MenuItem_Click_1">
                 
             </MenuItem>
         </Menu>
 
-        <Grid x:Name="mainGrid" MinWidth="900" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" MaxWidth="3000" HorizontalAlignment="Center" Grid.Row="1" >
+        <StackPanel Grid.Row="1" Orientation="Horizontal" >
+            <TextBlock x:Name="widthRoomTextBlock" Text="Ширина" Margin="0,5" Visibility="Collapsed" />
+            <TextBox x:Name="widthRoomTextBox" MinWidth="40" Margin="5,5,0,5" Height="20" PreviewTextInput="widthRoomTextBox_PreviewTextInput" Visibility="Collapsed"/>
+            <TextBlock x:Name="lengthRoomTextBlock" Text="Длинна" Margin="15,5,0,5" Visibility="Collapsed" />
+            <TextBox x:Name="lengthRoomTextBox" MinWidth="40" Margin="5,5,0,5" Height="20" PreviewTextInput="lengthRoomTextBox_PreviewTextInput" Visibility="Collapsed"/>
+            <Button x:Name="setLengthAndWidthButton" MinWidth="80" Background="#FFDAEEF1" Margin="40,5,0,5" Content="Задать" Click="setLengthAndWidthButton_Click" Visibility="Collapsed"/>
+        </StackPanel>
+
+        <Grid x:Name="mainGrid" MinWidth="900" ScrollViewer.CanContentScroll="True" ScrollViewer.HorizontalScrollBarVisibility="Auto" MaxWidth="3000" HorizontalAlignment="Center" Grid.Row="2" Margin="0,15,0,0" >
 
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -55,7 +65,7 @@
             <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
         <Border Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="auto" Height="auto" BorderBrush="Black" BorderThickness="1" Margin="15" >
-            <Canvas x:Name="CanvasAreaForSchemeOfRoom" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="100" MinWidth="100" Width="500" Height="400" Opacity="1" Background="AliceBlue"                   
+                <Canvas x:Name="CanvasAreaForSchemeOfRoom" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" MinHeight="100" MinWidth="100" Width="500" Height="400" Opacity="1" Background="AliceBlue"                   
                     MouseLeftButtonDown="MyIP_MouseLeftButtonDown" 
                     MouseMove="MyIP_MouseMove" MouseLeftButtonUp="Window_MouseLeftButtonUp" Initialized="CanvasAreaForSchemeOfRoom_Initialized" UIElement.KeyUp="CanvasAreaForSchemeOfRoom_KeyUp"/>
         </Border>

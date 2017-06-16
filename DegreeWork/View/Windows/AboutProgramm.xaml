@@ -1,0 +1,16 @@
+﻿<Window x:Class="DegreeWork.AboutProgramm"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DegreeWork"
+        mc:Ignorable="d"
+        Title="AboutProgramm" Height="300" Width="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Данное программное обеспечение разработано в рамках выпускной квалификационной работы на тему: Автоматизиация размещения устройств беспроводной связи в интеллектуальном здании на базе генетического алгоритма." Grid.RowSpan="2"  TextWrapping="Wrap" Margin="5,15,5,0" />
+    </Grid>
+</Window>
