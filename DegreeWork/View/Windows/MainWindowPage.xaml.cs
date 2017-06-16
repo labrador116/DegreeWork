@@ -598,7 +598,8 @@ namespace DegreeWork
 
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-             _Chromosome = (Chromosome)e.Result; 
+             _Chromosome = (Chromosome)e.Result;
+            double resultSum = 0;
 
             foreach (Gene gene in _Chromosome.Container)
             {
@@ -621,8 +622,12 @@ namespace DegreeWork
                 {
                     Color = Colors.Red
                 };
+                resultSum += gene.CoverageOfArea;
                 CanvasAreaForSchemeOfRoom.Children.Add(path);
             }
+
+            percentResultTexBox.Visibility = Visibility.Visible;
+            percentResultTexBox.Text = "Результат покрытия: " + (resultSum * 100) + "%";
         }
 
         private void saveMenuItem_Click(object sender, RoutedEventArgs e)

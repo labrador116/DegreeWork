@@ -72,6 +72,7 @@
         <Label x:Name="pressEnterLabel" Content="Для размещения нажмите клавишу Enter" Grid.Row="1" HorizontalAlignment="Center" FontSize="14" Foreground="#FF5479B9" Visibility="Collapsed" />
         <ProgressBar x:Name="geneticAlgProgressBar" Grid.Row="2" MinWidth="201" MinHeight="20" Foreground="#FF067AB0" Margin="15,0" Visibility="Collapsed" />
         <Label x:Name="progressTextStateLabel" Grid.Row="3" Content="progressText" HorizontalContentAlignment="Center" FontSize="14" Visibility="Collapsed" />
+         <TextBlock x:Name="percentResultTexBox" Grid.Row="4" Text="Результат" HorizontalAlignment="Center" FontSize="18" Visibility="Collapsed" />
         <Grid Grid.Column="1" >
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>

@@ -172,7 +172,15 @@ namespace DegreeWork
                     _Context.Schemes.Add(scheme);
                     _Context.SaveChanges();
 
-                    SingleSpaceParams.getInstance(_WidthOfArea, _HeightOfArea);
+                    if (SingleSpaceParams.getInstance() == null)
+                    {
+                        SingleSpaceParams.getInstance(_WidthOfArea, _HeightOfArea);
+                    }
+                    else
+                    {
+                        SingleSpaceParams.getInstance().Width = _WidthOfArea;
+                        SingleSpaceParams.getInstance().Height = _HeightOfArea;
+                    }
                     nav = NavigationService.GetNavigationService(this);
                     
                     MainWindowPage mainWindow = new MainWindowPage(_Context, project.ProjectId);

@@ -55,7 +55,7 @@ namespace DegreeWork.SpaceParam
         {
             if (instance == null)
             {
-                throw new Exception("SingleSpaceParams isn't created");
+                return null;
             }
             return instance;
         }

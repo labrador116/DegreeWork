@@ -71,7 +71,15 @@ namespace DegreeWork
             {
                 Project project = _ProjectsFromDB.ElementAt(_SelectedItemInCombobox);
                 SchemeOfBuilding scheme = project.Scheme.First();
-                SingleSpaceParams.getInstance(Convert.ToInt32(scheme.Width), Convert.ToInt32(scheme.Height));
+                if (SingleSpaceParams.getInstance() == null)
+                {
+                    SingleSpaceParams.getInstance(Convert.ToInt32(scheme.Width), Convert.ToInt32(scheme.Height));
+                }
+                else
+                {
+                    SingleSpaceParams.getInstance().Width = Convert.ToInt32(scheme.Width);
+                    SingleSpaceParams.getInstance().Height = Convert.ToInt32(scheme.Height);
+                }
 
                 MainWindowPage mainWindow = new MainWindowPage(_Context, project.ProjectId);
                 mainWindow.Show();
