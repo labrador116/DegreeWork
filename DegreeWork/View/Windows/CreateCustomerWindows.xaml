@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DegreeWork"
         mc:Ignorable="d"
-        Title="CreateCustomerWindows" Height="200" Width="370" ScrollViewer.HorizontalScrollBarVisibility="Auto" ResizeMode="CanResize" UseLayoutRounding="True" SizeToContent="Width">
+        Title="Создать заказчика" Height="200" Width="370" ScrollViewer.HorizontalScrollBarVisibility="Auto" ResizeMode="CanResize" UseLayoutRounding="True" SizeToContent="Width">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>

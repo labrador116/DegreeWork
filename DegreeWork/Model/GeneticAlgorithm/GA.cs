@@ -197,27 +197,40 @@ namespace DegreeWork.GeneticAlgorithm
 
                 /*Проверка покрытия комнат сигналом. Если все контрольные точки уже покрыты, а комнаты нет, и остались устройства беспроводной связи 
                  * тогда последующие гены будут размещается до тех пор, пока комнаты не будут покрыты*/
-                if (countofRoom != 0)
+                if (countofRoom != 0 && chr.Container.Count>0)
                 {
-                    if (checkOfCoverageOfRoom(chromosome.Container.ElementAt(i), rooms.ElementAt(0)))
+                    if (countOfPoint != 0)
                     {
-                        countofRoom--;
-                        rooms.RemoveAt(0);
-                    }
-                    else
-                    {
-                        if (countOfPoint==0)
+                        if (checkOfCoverageOfRoom(chromosome.Container.ElementAt(i), rooms.ElementAt(0)))
                         {
-                            ExecuteService.RefactorBadGene(chromosome.Container.ElementAt(i));
+                            countofRoom--;
+                            rooms.RemoveAt(0);
+                        }
+                    }
+                    if(countOfPoint==0)
+                    {
+                        if (checkOfCoverageOfRoomAfterPoints(chr.Container, rooms)==false)
+                        {
+                            for (int sum = 0; sum < chromosome.Container.Count; sum++)
+                            {
+                                for (int chrSum = 0; chrSum < chr.Container.Count; chrSum++)
+                                {
+                                    if ((chromosome.Container.ElementAt(sum).OX == chr.Container.ElementAt(chrSum).OX) &&
+                                    (chromosome.Container.ElementAt(sum).OY == chr.Container.ElementAt(chrSum).OY))
+                                    {
+                                        ExecuteService.RefactorBadGene(chromosome.Container.ElementAt(sum));
+                                    }
+                                }
+                            }
                             if (i == 0)
-                            {
-                                i = -1;
-                            }
-                            else
-                            {
-                                i--;
-                            }
-                            continue;
+                                {
+                                    i = -1;
+                                }
+                                else
+                                {
+                                    i--;
+                                }
+                                continue;
                         }
                     }
                 }
@@ -296,17 +309,53 @@ namespace DegreeWork.GeneticAlgorithm
             {
                 for (int j = 0; j < rooms.Count; j++)
                 {
-                    if (genes.ElementAt(i).OX > rooms.ElementAt(j).X1 && genes.ElementAt(i).OX < rooms.ElementAt(j).X2 && genes.ElementAt(i).OY > rooms.ElementAt(j).Y1 && genes.ElementAt(i).OY < rooms.ElementAt(j).Y4)
+                    if (rooms.ElementAt(j).X1 < rooms.ElementAt(j).X2)
                     {
-                        goodGenes.Add(genes.ElementAt(i));
-                        rooms.RemoveAt(j);
-                        isBad = false;
-                        break;
+                        if (rooms.ElementAt(j).Y1 < rooms.ElementAt(j).Y4)
+                        {
+                            if (genes.ElementAt(i).OX > rooms.ElementAt(j).X1 && genes.ElementAt(i).OX < rooms.ElementAt(j).X2 && genes.ElementAt(i).OY > rooms.ElementAt(j).Y1 && genes.ElementAt(i).OY < rooms.ElementAt(j).Y4)
+                            {
+                                goodGenes.Add(genes.ElementAt(i));
+                                rooms.RemoveAt(j);
+                                isBad = false;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if (genes.ElementAt(i).OX > rooms.ElementAt(j).X1 && genes.ElementAt(i).OX < rooms.ElementAt(j).X2 && genes.ElementAt(i).OY < rooms.ElementAt(j).Y1 && genes.ElementAt(i).OY > rooms.ElementAt(j).Y4)
+                            {
+                                goodGenes.Add(genes.ElementAt(i));
+                                rooms.RemoveAt(j);
+                                isBad = false;
+                                break; ;
+                            }
+                        }
                     }
                     else
                     {
-                        isBad = true;
+                        if (rooms.ElementAt(j).Y1 < rooms.ElementAt(j).Y4)
+                        {
+                            if (genes.ElementAt(i).OX < rooms.ElementAt(j).X1 && genes.ElementAt(i).OX > rooms.ElementAt(j).X2 && genes.ElementAt(i).OY > rooms.ElementAt(j).Y1 && genes.ElementAt(i).OY < rooms.ElementAt(j).Y4)
+                            {
+                                goodGenes.Add(genes.ElementAt(i));
+                                rooms.RemoveAt(j);
+                                isBad = false;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if (genes.ElementAt(i).OX < rooms.ElementAt(j).X1 && genes.ElementAt(i).OX > rooms.ElementAt(j).X2 && genes.ElementAt(i).OY < rooms.ElementAt(j).Y1 && genes.ElementAt(i).OY > rooms.ElementAt(j).Y4)
+                            {
+                                goodGenes.Add(genes.ElementAt(i));
+                                rooms.RemoveAt(j);
+                                isBad = false;
+                                break;
+                            }
+                        }
                     }
+                    isBad = true;
                 }
 
                 if (isBad == true)
@@ -329,6 +378,89 @@ namespace DegreeWork.GeneticAlgorithm
                 return null;
             }
             
+        }
+
+        private static bool checkOfCoverageOfRoomAfterPoints(List<Gene> genes, List<RectangleRoom> rooms)
+        {
+            bool isBad = false;
+            List<Gene> badGenes = new List<Gene>();
+            List<Gene> goodGenes = new List<Gene>();
+
+            for (int i = 0; i < genes.Count; i++)
+            {
+                for (int j = 0; j < rooms.Count; j++)
+                {
+                    if (rooms.ElementAt(j).X1 < rooms.ElementAt(j).X2)
+                    {
+                        if (rooms.ElementAt(j).Y1 < rooms.ElementAt(j).Y4)
+                        {
+                            if (genes.ElementAt(i).OX > rooms.ElementAt(j).X1 && genes.ElementAt(i).OX < rooms.ElementAt(j).X2 && genes.ElementAt(i).OY > rooms.ElementAt(j).Y1 && genes.ElementAt(i).OY < rooms.ElementAt(j).Y4)
+                            {
+                                goodGenes.Add(genes.ElementAt(i));
+                                rooms.RemoveAt(j);
+                                isBad = false;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if (genes.ElementAt(i).OX > rooms.ElementAt(j).X1 && genes.ElementAt(i).OX < rooms.ElementAt(j).X2 && genes.ElementAt(i).OY < rooms.ElementAt(j).Y1 && genes.ElementAt(i).OY > rooms.ElementAt(j).Y4)
+                            {
+                                goodGenes.Add(genes.ElementAt(i));
+                                rooms.RemoveAt(j);
+                                isBad = false;
+                                break; ;
+                            }
+                        }
+                    }
+                    else
+                    {
+                        if (rooms.ElementAt(j).Y1 < rooms.ElementAt(j).Y4)
+                        {
+                            if (genes.ElementAt(i).OX < rooms.ElementAt(j).X1 && genes.ElementAt(i).OX > rooms.ElementAt(j).X2 && genes.ElementAt(i).OY > rooms.ElementAt(j).Y1 && genes.ElementAt(i).OY < rooms.ElementAt(j).Y4)
+                            {
+                                goodGenes.Add(genes.ElementAt(i));
+                                rooms.RemoveAt(j);
+                                isBad = false;
+                                break;
+                            }
+                        }
+                        else
+                        {
+                            if (genes.ElementAt(i).OX < rooms.ElementAt(j).X1 && genes.ElementAt(i).OX > rooms.ElementAt(j).X2 && genes.ElementAt(i).OY < rooms.ElementAt(j).Y1 && genes.ElementAt(i).OY > rooms.ElementAt(j).Y4)
+                            {
+                                goodGenes.Add(genes.ElementAt(i));
+                                rooms.RemoveAt(j);
+                                isBad = false;
+                                break;
+                            }
+                        }
+                    }
+                    isBad = true;
+                }
+
+                if (isBad == true)
+                {
+                    badGenes.Add(genes.ElementAt(i));
+                }
+            }
+
+            if (goodGenes.Count > 0)
+            {
+                foreach (Gene gene in goodGenes)
+                {
+                    genes.Remove(gene);
+                }
+            }
+
+            if (badGenes.Count > 0 && rooms.Count > 0)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
         }
 
         private static bool checkOfCoverageOfRoom(Gene gene, RectangleRoom room)
@@ -369,6 +501,7 @@ namespace DegreeWork.GeneticAlgorithm
             }
             return false;
         }
+
 
         /*Метод проверки вхождения точек в область окружноти*/
         private static bool checkOfCoverageOfControlPoint(List<Gene> genes, ControlPointInst point)

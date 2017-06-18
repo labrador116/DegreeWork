@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DegreeWork"
         mc:Ignorable="d"
-        Title="chooseModelOfModule"  SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
+        Title="Выбор моделей"  SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>

@@ -170,6 +170,12 @@ namespace DegreeWork
         {
             if (_IsRoom)
             {
+                widthRoomTextBlock.Visibility = Visibility.Collapsed;
+                widthRoomTextBox.Visibility = Visibility.Collapsed;
+                lengthRoomTextBlock.Visibility = Visibility.Collapsed;
+                lengthRoomTextBox.Visibility = Visibility.Collapsed;
+                setLengthAndWidthButton.Visibility = Visibility.Collapsed;
+
                 if (line != null && line2 != null)
                 {
                     RectangleRoom room = new RectangleRoom
@@ -383,6 +389,12 @@ namespace DegreeWork
 
                 if (e.Key == Key.Escape)
                 {
+                    widthRoomTextBlock.Visibility = Visibility.Collapsed;
+                    widthRoomTextBox.Visibility = Visibility.Collapsed;
+                    lengthRoomTextBlock.Visibility = Visibility.Collapsed;
+                    lengthRoomTextBox.Visibility = Visibility.Collapsed;
+                    setLengthAndWidthButton.Visibility = Visibility.Collapsed;
+
                     if (line != null && line2 != null && line3 != null && line4 != null)
                     {
                         CanvasAreaForSchemeOfRoom.Children.Remove(line);
@@ -450,7 +462,7 @@ namespace DegreeWork
                         int coord_X4 = room.Coord_X4;
                         int coord_Y4 = room.Coord_Y4;
 
-                        line = new Line
+                       Line lin = new Line
                         {
                             Stroke = color,
                             StrokeThickness = SIZE,
@@ -462,7 +474,7 @@ namespace DegreeWork
                             StrokeEndLineCap = PenLineCap.Round
                         };
 
-                        line2 = new Line
+                        Line lin2 = new Line
                         {
                             Stroke = color,
                             StrokeThickness = SIZE,
@@ -474,7 +486,7 @@ namespace DegreeWork
                             StrokeEndLineCap = PenLineCap.Round
                         };
 
-                        line3 = new Line
+                        Line lin3 = new Line
                         {
                             Stroke = color,
                             StrokeThickness = SIZE,
@@ -486,7 +498,7 @@ namespace DegreeWork
                             StrokeEndLineCap = PenLineCap.Round
                         };
 
-                        line4 = new Line
+                        Line lin4 = new Line
                         {
                             Stroke = color,
                             StrokeThickness = SIZE,
@@ -498,10 +510,10 @@ namespace DegreeWork
                             StrokeEndLineCap = PenLineCap.Round
                         };
 
-                        CanvasAreaForSchemeOfRoom.Children.Add(line);
-                        CanvasAreaForSchemeOfRoom.Children.Add(line2);
-                        CanvasAreaForSchemeOfRoom.Children.Add(line3);
-                        CanvasAreaForSchemeOfRoom.Children.Add(line4);
+                        CanvasAreaForSchemeOfRoom.Children.Add(lin);
+                        CanvasAreaForSchemeOfRoom.Children.Add(lin2);
+                        CanvasAreaForSchemeOfRoom.Children.Add(lin3);
+                        CanvasAreaForSchemeOfRoom.Children.Add(lin4);
 
                         RectangleRoom rectRoom = new RectangleRoom();
                         rectRoom.X1 = room.Coord_X1;
