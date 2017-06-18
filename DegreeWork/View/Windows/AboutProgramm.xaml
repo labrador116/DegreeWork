@@ -5,12 +5,19 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DegreeWork"
         mc:Ignorable="d"
-        Title="AboutProgramm" Height="300" Width="300">
+        Title="О программе" Height="300" Width="300">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Данное программное обеспечение разработано в рамках выпускной квалификационной работы на тему: Автоматизиация размещения устройств беспроводной связи в интеллектуальном здании на базе генетического алгоритма." Grid.RowSpan="2"  TextWrapping="Wrap" Margin="5,15,5,0" />
+        <TextBlock Text="Данное программное обеспечение разработано в рамках выпускной квалификационной работы на тему: Автоматизиация размещения устройств беспроводной связи в интеллектуальном здании на базе генетического алгоритма." TextWrapping="Wrap" Margin="5,15,5,0" />
+        <TextBlock Grid.Row="1"  TextWrapping="Wrap" Margin="5,15,5,0" Text="Программное обеспечение разработал студент группы 4315 Маркин Андрей." HorizontalAlignment="Right" />
+        <TextBlock Grid.Row="2"  TextWrapping="Wrap" Margin="5,10,5,0" Text="Руководитель: ст. преподаватель кафедры САПР Суздальцев Илья Владимирович." HorizontalAlignment="Right" />
+        <TextBlock Grid.Row="3"  TextWrapping="Wrap" Margin="5,50,5,0" Text="Казань, 2017. КНИТУ-КАИ кафедра САПР." HorizontalAlignment="Center" VerticalAlignment="Bottom" />
+
+
     </Grid>
 </Window>

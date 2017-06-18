@@ -18,6 +18,15 @@ namespace DegreeWork.Container
             _container = new List<Gene>();
         }
 
+        public Chromosome (Chromosome chr)
+        {
+            _container = new List<Gene>();
+            foreach (Gene gene in chr.Container)
+            {
+                _container.Add(gene);
+            }
+        }
+
         public List<Gene> Container { get => _container; set => _container = value; }
     }
 }

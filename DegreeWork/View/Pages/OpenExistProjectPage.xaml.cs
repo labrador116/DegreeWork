@@ -77,8 +77,8 @@ namespace DegreeWork
                 }
                 else
                 {
-                    SingleSpaceParams.getInstance().Width = Convert.ToInt32(scheme.Width);
-                    SingleSpaceParams.getInstance().Height = Convert.ToInt32(scheme.Height);
+                    SingleSpaceParams.KillSingle();
+                    SingleSpaceParams.getInstance(Convert.ToInt32(scheme.Width), Convert.ToInt32(scheme.Height));
                 }
 
                 MainWindowPage mainWindow = new MainWindowPage(_Context, project.ProjectId);

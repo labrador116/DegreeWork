@@ -31,43 +31,36 @@ namespace DegreeWork.GeneticAlgorithm
 
             List<ControlPointInst> points = new List<ControlPointInst>(SingleSpaceParams.getInstance().ControlPoints);
             List<RectangleRoom> rooms = new List<RectangleRoom>(SingleSpaceParams.getInstance().Rooms);
+            Chromosome chr = new Chromosome(chromosome);
 
-            for (int i = 0; i < length; i++)
-            {
+            
                 //Проврека на покрытие сигналом контрольных точек, если все точки уже покрыты, тогда проерка не проводится
-                if (countOfPoint != 0)
+                if (points.Count != 0)
                 {
-                    if (checkOfCoverageOfControlPoint(chromosome.Container.ElementAt(i), points.ElementAt(i)))
-                    {
-                        countOfPoint--;
-                    }
-                    else
+                    Gene gene = checkOfCoverageOfControlPointForCross(chr.Container, points);
+                    if(gene!=null)
                     {
                         hashMap.Add("point", points.First());
-                        hashMap.Add("gene", chromosome.Container.ElementAt(i));
+                        hashMap.Add("gene", gene);
                         return hashMap;
                     }
                 }
 
                 /*Проверка покрытия комнат сигналом. Если все контрольные точки уже покрыты, а комнаты нет, и остались устройства беспроводной связи 
                  * тогда последующие гены будут размещается до тех пор, пока комнаты не будут покрыты*/
-                if (countofRoom != 0)
+                if (rooms.Count != 0 && points.Count==0)
                 {
-                    if (checkOfCoverageOfRoom(chromosome.Container.ElementAt(i), rooms))
+                    Gene gene = checkOfCoverageOfRoomForCross(chr.Container, rooms);
+                    if (gene!=null)
                     {
-                        countofRoom--;
-                    }
-                    else
-                    {
-                        if (countofRoom == 0 && i != length && countOfPoint==0)
-                        {
-                            hashMap.Add("room", rooms.First());
-                            hashMap.Add("gene", chromosome.Container.ElementAt(i));
-                            return hashMap;
-                        }
+                        hashMap.Add("room", rooms.First());
+                        hashMap.Add("gene", gene);
+                        return hashMap;
                     }
                 }
 
+            for (int i = 0; i < length; i++)
+            {
                 for (int j = 0; j < length; j++)
                 {
                     //ToDo Самая первая гена не проверяется на пересечения с границами, нужно исправить.
@@ -129,8 +122,11 @@ namespace DegreeWork.GeneticAlgorithm
             //Количество комнат
             int countofRoom = SingleSpaceParams.getInstance().Rooms.Count;
             int counter = 0;
+
             List<ControlPointInst> points = new List<ControlPointInst>(SingleSpaceParams.getInstance().ControlPoints);
             List<RectangleRoom> rooms = new List<RectangleRoom>(SingleSpaceParams.getInstance().Rooms);
+            Chromosome chr = new Chromosome(chromosome);
+
             int from = 0;
             int to = 0;
             for (int i = 0; i <length ; i++)
@@ -138,13 +134,41 @@ namespace DegreeWork.GeneticAlgorithm
                 //Проврека на покрытие сигналом контрольных точек, если все точки уже покрыты, тогда проерка не проводится
                 if (countOfPoint != 0)
                 {
-                    if (checkOfCoverageOfControlPoint(chromosome.Container.ElementAt(i), points.ElementAt(i)))
+                    if (checkOfCoverageOfControlPoint(chr.Container, points.ElementAt(0)))
                     {
                         countOfPoint--;
+                        points.RemoveAt(0);
                     }
                     else
                     { 
-                        if (chromosome.Container.ElementAt(i).OX> points.ElementAt(i).X1)
+
+                        for (int sum =0; sum<chromosome.Container.Count; sum++)
+                        {
+                           for (int chrSum = 0; chrSum<chr.Container.Count; chrSum++)
+                            {
+                                if ((chromosome.Container.ElementAt(sum).OX == chr.Container.ElementAt(chrSum).OX) &&
+                                    (chromosome.Container.ElementAt(sum).OY == chr.Container.ElementAt(chrSum).OY))
+                                {
+                                    if(chromosome.Container.ElementAt(sum).OX > points.ElementAt(0).X1)
+                        {
+                                        if (to == 0 || chromosome.Container.ElementAt(sum).OX < to)
+                                        { to = chromosome.Container.ElementAt(sum).OX; }
+                                        ExecuteService.RefactorBadGeneForWidthTo(chromosome.Container.ElementAt(sum), to);
+                                        break;
+                                    }
+                                    else
+                                    {
+                                        //ExecuteService.RefactorBadGene(chromosome.Container.ElementAt(i));
+                                        if (from == 0 || chromosome.Container.ElementAt(sum).OX > from)
+                                        { from = chromosome.Container.ElementAt(sum).OX; }
+                                        ExecuteService.RefactorBadGeneForWidthFrom(chromosome.Container.ElementAt(sum), from);
+                                        break;
+                                    }
+                                }
+                            }
+                        }
+
+                       /* if (chromosome.Container.ElementAt(i).OX> points.ElementAt(i).X1)
                         {
                             if (to == 0 || chromosome.Container.ElementAt(i).OX < to)
                             { to = chromosome.Container.ElementAt(i).OX; }
@@ -156,7 +180,7 @@ namespace DegreeWork.GeneticAlgorithm
                                   if (from == 0 || chromosome.Container.ElementAt(i).OX > from)
                                   { from = chromosome.Container.ElementAt(i).OX; }
                                   ExecuteService.RefactorBadGeneForWidthFrom(chromosome.Container.ElementAt(i), from);
-                        }
+                        } */
                 
                         //ExecuteService.RefactorBadGene(chromosome.Container.ElementAt(i));
                         if (i == 0)
@@ -178,11 +202,11 @@ namespace DegreeWork.GeneticAlgorithm
                     if (checkOfCoverageOfRoom(chromosome.Container.ElementAt(i), rooms.ElementAt(0)))
                     {
                         countofRoom--;
-                        rooms.Remove(rooms.ElementAt(0));
+                        rooms.RemoveAt(0);
                     }
                     else
                     {
-                        if (i!=length && countOfPoint==0)
+                        if (countOfPoint==0)
                         {
                             ExecuteService.RefactorBadGene(chromosome.Container.ElementAt(i));
                             if (i == 0)
@@ -262,6 +286,51 @@ namespace DegreeWork.GeneticAlgorithm
             return false;
         }
 
+        private static Gene checkOfCoverageOfRoomForCross(List<Gene> genes, List<RectangleRoom> rooms)
+        {
+            bool isBad = false;
+            List<Gene> badGenes = new List<Gene>();
+            List<Gene> goodGenes = new List<Gene>();
+
+            for (int i = 0; i < genes.Count; i++)
+            {
+                for (int j = 0; j < rooms.Count; j++)
+                {
+                    if (genes.ElementAt(i).OX > rooms.ElementAt(j).X1 && genes.ElementAt(i).OX < rooms.ElementAt(j).X2 && genes.ElementAt(i).OY > rooms.ElementAt(j).Y1 && genes.ElementAt(i).OY < rooms.ElementAt(j).Y4)
+                    {
+                        goodGenes.Add(genes.ElementAt(i));
+                        rooms.RemoveAt(j);
+                        isBad = false;
+                        break;
+                    }
+                    else
+                    {
+                        isBad = true;
+                    }
+                }
+
+                if (isBad == true)
+                {
+                    badGenes.Add(genes.ElementAt(i));
+                }
+            }
+
+            if (badGenes.Count > 0 && rooms.Count > 0)
+            {
+                return badGenes.ElementAt(0);
+            }
+            else
+            {
+                foreach (Gene gene in goodGenes)
+                {
+                    genes.Remove(gene);
+                }
+
+                return null;
+            }
+            
+        }
+
         private static bool checkOfCoverageOfRoom(Gene gene, RectangleRoom room)
         {
             if (room.X1 < room.X2)
@@ -302,20 +371,66 @@ namespace DegreeWork.GeneticAlgorithm
         }
 
         /*Метод проверки вхождения точек в область окружноти*/
-        private static bool checkOfCoverageOfControlPoint(Gene gene,List<ControlPointInst> points)
-        {
-            foreach(ControlPointInst point in points)
+        private static bool checkOfCoverageOfControlPoint(List<Gene> genes, ControlPointInst point)
+        { 
+            for (int i = 0; i < genes.Count; i++)
             {
-                double F = Math.Pow(point.X1 - gene.OX, 2) + Math.Pow(point.Y1 - gene.OY, 2);
+                double F = Math.Pow(point.X1 - genes.ElementAt(i).OX, 2) + Math.Pow(point.Y1 - genes.ElementAt(i).OY, 2);
 
-                if (F <= Math.Pow(gene.Radius, 2))
+                if(F <= Math.Pow(genes.ElementAt(i).Radius, 2))
                 {
-                    points.Remove(point);
+                    genes.RemoveAt(i);
                     return true;
                 }
             }
             return false;
         }
+
+        private static Gene checkOfCoverageOfControlPointForCross(List<Gene> genes, List<ControlPointInst> points)
+        {
+            bool isBad = false;
+            List<Gene> badGenes = new List<Gene>();
+            List<Gene> goodGenes = new List<Gene>();
+
+            for (int i = 0; i < genes.Count; i++)
+            {
+                for (int j = 0; j < points.Count; j++)
+                {
+                    double F = Math.Pow(points.ElementAt(j).X1 - genes.ElementAt(i).OX, 2) + Math.Pow(points.ElementAt(j).Y1 - genes.ElementAt(i).OY, 2);
+
+                    if (F <= Math.Pow(genes.ElementAt(i).Radius, 2))
+                    {
+                        goodGenes.Add(genes.ElementAt(i));
+                        points.RemoveAt(j);
+                        isBad = false;
+                        break;
+                    }
+                    else
+                    {
+                        isBad = true;
+                    }
+                }
+
+                if (isBad == true)
+                {
+                    badGenes.Add(genes.ElementAt(i));
+                }
+            }
+
+            if (badGenes.Count > 0 && points.Count > 0)
+            {
+                return badGenes.ElementAt(0);
+            }
+            else
+            {
+                foreach(Gene gene in goodGenes)
+                {
+                    genes.Remove(gene);
+                }
+                return null;
+            }
+        }
+              
 
         private static bool checkOfCoverageOfControlPoint(Gene gene, ControlPointInst point)
         {
@@ -594,7 +709,6 @@ namespace DegreeWork.GeneticAlgorithm
                     child = OperationCO(parentA, parentB, dotOfCrossingOver);
                     checkInvalid(child, parentA, parentB);
                     hashMap = CheckIntersection(child, 0);*/
- 
             }
 
         }
@@ -604,7 +718,7 @@ namespace DegreeWork.GeneticAlgorithm
         {
             var random = new Random();
             
-            if (random.NextDouble() < SingleSpaceParams.getInstance().PropabilityOfMutation)
+            if (random.NextDouble() <= SingleSpaceParams.getInstance().PropabilityOfMutation)
             {
                 while (CheckIntersection(chr, 0) != null)
                 {

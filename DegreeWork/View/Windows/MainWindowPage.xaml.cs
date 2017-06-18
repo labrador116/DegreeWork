@@ -6,6 +6,7 @@ using DegreeWork.Model.Instances;
 using DegreeWork.Service;
 using DegreeWork.SpaceParam;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -604,9 +605,9 @@ namespace DegreeWork
 
         private void BackgroundWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-             _Chromosome = (Chromosome)e.Result;
-            double resultSum = 0;
-
+            Hashtable hashMap = (Hashtable)e.Result;
+             _Chromosome = (Chromosome)hashMap["chromosome"];
+          
             foreach (Gene gene in _Chromosome.Container)
             {
                 EllipseGeometry el = new EllipseGeometry
@@ -628,12 +629,12 @@ namespace DegreeWork
                 {
                     Color = Colors.Red
                 };
-                resultSum += gene.CoverageOfArea;
+                
                 CanvasAreaForSchemeOfRoom.Children.Add(path);
             }
 
             percentResultTexBox.Visibility = Visibility.Visible;
-            percentResultTexBox.Text = "Результат покрытия: " + resultSum ;
+            percentResultTexBox.Text = "Результат покрытия: " + (double)hashMap["ratio"] ;
         }
 
         private void saveMenuItem_Click(object sender, RoutedEventArgs e)

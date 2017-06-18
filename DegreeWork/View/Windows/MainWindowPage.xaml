@@ -28,13 +28,12 @@
                 <MenuItem x:Name="getOut" Header="Выйти" Click="getOut_Click" />
             </MenuItem>
 
-            <MenuItem Header="Настройка ген. алгоритма">
+            <MenuItem Header="Настройка алгоритма">
                 <MenuItem x:Name="setSumOfChromosomesMenuItem" Header="Задать количество хромосом" Click="setSumOfChromosomesMenuItem_Click"/>
                 <MenuItem Header="Задать вероятность мутации" Click="MenuItem_Click"/>
-            </MenuItem>
-
-            <MenuItem x:Name="resultGraphicsMenuItem" Header="Графики">
-                <MenuItem x:Name="FuncByPopulationRelationship" Header="Отношение ЦФ к популяции" Click="FuncByPopulationRelationship_Click"/>
+                <MenuItem x:Name="resultGraphicsMenuItem" Header="Графики">
+                    <MenuItem x:Name="FuncByPopulationRelationship" Header="График зависимости" Click="FuncByPopulationRelationship_Click"/>
+                </MenuItem>
             </MenuItem>
 
             <MenuItem Header="O программе" Click="MenuItem_Click_1">

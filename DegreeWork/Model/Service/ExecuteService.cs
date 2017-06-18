@@ -2,6 +2,7 @@
 using DegreeWork.Container;
 using DegreeWork.SpaceParam;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -51,7 +52,7 @@ namespace DegreeWork.Service
             gene.OY = getRandomValue(0, SingleSpaceParams.getInstance().Height);
         }
 
-        public Chromosome Start()
+        public Hashtable Start()
         {
             _populationContainer = new Population();
             parOps.MaxDegreeOfParallelism = Environment.ProcessorCount;
@@ -59,7 +60,7 @@ namespace DegreeWork.Service
             return Executing();
         }
 
-        public Chromosome Executing()
+        public Hashtable Executing()
         {
             /*Создание первой популяции*/
             _BackgroundWorker.ReportProgress(0, "Создание первой популяции");
@@ -112,7 +113,10 @@ namespace DegreeWork.Service
                             if (countAccessResult == 5 || result.Ratio == 1)
                             {
                                 _BackgroundWorker.ReportProgress(100, "Готово");
-                                return _result.ElementAt(0).Chromosome;
+                                Hashtable hashMap = new Hashtable();
+                                hashMap.Add("chromosome", _result.ElementAt(0).Chromosome);
+                                hashMap.Add("ratio", _result.ElementAt(0).Ratio);
+                                return hashMap;
                             }
                         }
                     }
