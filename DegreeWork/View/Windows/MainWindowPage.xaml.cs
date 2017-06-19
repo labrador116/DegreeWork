@@ -611,7 +611,9 @@ namespace DegreeWork
         }
         private void BackgroundWorker_ProgressChanged_1(object sender, ProgressChangedEventArgs e)
         {
+            percentValueLabel.Visibility = Visibility.Visible;
             geneticAlgProgressBar.Value = e.ProgressPercentage;
+            percentValueLabel.Content = e.ProgressPercentage + "%";
             progressTextStateLabel.Content = e.UserState;
         }
 
@@ -850,7 +852,7 @@ namespace DegreeWork
 
         private void MenuItem_Click_1(object sender, RoutedEventArgs e)
         {
-            
+            new AboutProgramm().ShowDialog();
         }
 
         private void setLengthAndWidthButton_Click(object sender, RoutedEventArgs e)

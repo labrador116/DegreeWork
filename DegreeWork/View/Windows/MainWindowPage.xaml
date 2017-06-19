@@ -7,11 +7,12 @@
         xmlns:System="clr-namespace:System;assembly=mscorlib"
         xmlns:cm="clr-namespace:System.ComponentModel;assembly=System"
         mc:Ignorable="d"
-        Title="Главное окно" d:DesignWidth="900" Background="WhiteSmoke" SizeToContent="WidthAndHeight" MinHeight="400"  HorizontalContentAlignment="Stretch" KeyUp="win_KeyUp" >
+        Title="Главное окно" d:DesignWidth="900" Background="WhiteSmoke" SizeToContent="WidthAndHeight" MinHeight="400"  HorizontalContentAlignment="Stretch" KeyUp="win_KeyUp" ScrollViewer.CanContentScroll="True" >
 
     <Window.Resources>
         <cm:BackgroundWorker x:Key="backgroundWorker" WorkerReportsProgress="True" DoWork="BackgroundWorker_DoWork" ProgressChanged="BackgroundWorker_ProgressChanged_1" RunWorkerCompleted="BackgroundWorker_RunWorkerCompleted"></cm:BackgroundWorker>
     </Window.Resources>
+    <ScrollViewer>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
@@ -63,13 +64,14 @@
             <ColumnDefinition Width="auto"/>
             <ColumnDefinition Width="auto" />
         </Grid.ColumnDefinitions>
-        <Border Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top" Width="auto" Height="auto" BorderBrush="Black" BorderThickness="1" Margin="15" >
+        <Border Grid.Column="0" HorizontalAlignment="Left" Width="auto" Height="auto" BorderBrush="Black" BorderThickness="1" Margin="15" >
                 <Canvas x:Name="CanvasAreaForSchemeOfRoom" Grid.Column="0" HorizontalAlignment="Left" VerticalAlignment="Top"  Width="500" Height="400" Opacity="1" Background="AliceBlue"                   
                     MouseLeftButtonDown="MyIP_MouseLeftButtonDown" 
                     MouseMove="MyIP_MouseMove" MouseLeftButtonUp="Window_MouseLeftButtonUp" Initialized="CanvasAreaForSchemeOfRoom_Initialized" UIElement.KeyUp="CanvasAreaForSchemeOfRoom_KeyUp"/>
         </Border>
-        <Label x:Name="pressEnterLabel" Content="Для размещения нажмите клавишу Enter" Grid.Row="1" HorizontalAlignment="Center" FontSize="14" Foreground="#FF5479B9" Visibility="Collapsed" />
-        <ProgressBar x:Name="geneticAlgProgressBar" Grid.Row="2" MinWidth="201" MinHeight="20" Foreground="#FF067AB0" Margin="15,0" Visibility="Collapsed" />
+        <Label x:Name="pressEnterLabel" Content="Для размещения нажмите клавишу Enter, для отмены Esc" Grid.Row="1" HorizontalAlignment="Center" FontSize="14" Foreground="#FF5479B9" Visibility="Collapsed" />
+        <ProgressBar x:Name="geneticAlgProgressBar" Grid.Row="2" MinWidth="201" MinHeight="20" Foreground="#FF067AB0" Margin="15,0" Opacity="0.8" Visibility="Collapsed" />
+            <Label x:Name="percentValueLabel" Grid.Row="2" Content="value" HorizontalAlignment="Center" FontSize="16" Visibility="Collapsed"/>
         <Label x:Name="progressTextStateLabel" Grid.Row="3" Content="progressText" HorizontalContentAlignment="Center" FontSize="14" Visibility="Collapsed" />
          <TextBlock x:Name="percentResultTexBox" Grid.Row="4" Text="Результат" HorizontalAlignment="Center" FontSize="18" Visibility="Collapsed" />
         <Grid Grid.Column="1" >
@@ -112,4 +114,5 @@
         </Grid>
     </Grid>
     </Grid>
+        </ScrollViewer>
 </Window>

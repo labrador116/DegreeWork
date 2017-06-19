@@ -131,7 +131,7 @@ namespace DegreeWork.GeneticAlgorithm
             int to = 0;
             for (int i = 0; i <length ; i++)
             {
-                //Проврека на покрытие сигналом контрольных точек, если все точки уже покрыты, тогда проерка не проводится
+                //Проврека на покрытие сигналом контрольных точек, если все точки уже покрыты, тогда проерка не проводится. countofPoint заменить на проверку кол-ва элементов в списке
                 if (countOfPoint != 0)
                 {
                     if (checkOfCoverageOfControlPoint(chr.Container, points.ElementAt(0)))

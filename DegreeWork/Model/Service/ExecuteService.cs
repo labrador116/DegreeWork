@@ -17,8 +17,7 @@ namespace DegreeWork.Service
         private List<int> _radiusContainer;
         private Population _populationContainer;
         private List<ResultModel> _result;
-        private static ParallelOptions parOps = new ParallelOptions();
-        
+      
         public event EventHandler WrongParams;
         public delegate void SendPopulation (Chromosome chromosome);
         public event SendPopulation callback;
@@ -55,7 +54,6 @@ namespace DegreeWork.Service
         public Hashtable Start()
         {
             _populationContainer = new Population();
-            parOps.MaxDegreeOfParallelism = Environment.ProcessorCount;
             _BackgroundWorker.ReportProgress(0, "Старт");
             return Executing();
         }
@@ -114,8 +112,9 @@ namespace DegreeWork.Service
                             {
                                 _BackgroundWorker.ReportProgress(100, "Готово");
                                 Hashtable hashMap = new Hashtable();
-                                hashMap.Add("chromosome", _result.ElementAt(0).Chromosome);
-                                hashMap.Add("ratio", _result.ElementAt(0).Ratio);
+                                SingleSpaceParams.getInstance().GlobalResultContainerGetSet.Sort((a, b) => b.Ratio.CompareTo(a.Ratio));
+                                hashMap.Add("chromosome", SingleSpaceParams.getInstance().GlobalResultContainerGetSet.ElementAt(0).Chromosome);
+                                hashMap.Add("ratio", SingleSpaceParams.getInstance().GlobalResultContainerGetSet.ElementAt(0).Ratio);
                                 return hashMap;
                             }
                         }
